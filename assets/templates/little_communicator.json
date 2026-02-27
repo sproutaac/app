@@ -1,0 +1,122 @@
+{
+  "format": "open-board-0.1",
+  "id": "sprout-template-little-communicator",
+  "locale": "en-US",
+  "name": "Little Communicator",
+  "description_html": "A 9-symbol starter board for early communicators (ages 2–4). Core vocabulary only — the words children need most, in stable positions they can learn by feel.",
+  "license": {
+    "type": "CC By",
+    "copyright_notice_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "images": [
+    { "id": "img-more",     "url": "/opensymbols/more.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-stop",     "url": "/opensymbols/stop.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-help",     "url": "/opensymbols/help.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-want",     "url": "/opensymbols/want.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-go",       "url": "/opensymbols/go.png",       "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-eat",      "url": "/opensymbols/eat.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-drink",    "url": "/opensymbols/drink.png",    "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-yes",      "url": "/opensymbols/yes.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-no",       "url": "/opensymbols/no.png",       "content_type": "image/png", "width": 300, "height": 300 }
+  ],
+  "sounds": [],
+  "buttons": [
+    {
+      "id": "btn-more",
+      "label": "more",
+      "vocalization": "more",
+      "image_id": "img-more",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 0, "column": 0
+    },
+    {
+      "id": "btn-stop",
+      "label": "stop",
+      "vocalization": "stop",
+      "image_id": "img-stop",
+      "background_color": "rgb(229, 57, 53)",
+      "border_color": "rgb(183, 28, 28)",
+      "row": 0, "column": 1
+    },
+    {
+      "id": "btn-help",
+      "label": "help",
+      "vocalization": "help",
+      "image_id": "img-help",
+      "background_color": "rgb(255, 167, 38)",
+      "border_color": "rgb(230, 119, 0)",
+      "row": 0, "column": 2
+    },
+    {
+      "id": "btn-want",
+      "label": "want",
+      "vocalization": "I want",
+      "image_id": "img-want",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 1, "column": 0
+    },
+    {
+      "id": "btn-go",
+      "label": "go",
+      "vocalization": "go",
+      "image_id": "img-go",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 1, "column": 1
+    },
+    {
+      "id": "btn-eat",
+      "label": "eat",
+      "vocalization": "eat",
+      "image_id": "img-eat",
+      "background_color": "rgb(255, 167, 38)",
+      "border_color": "rgb(230, 119, 0)",
+      "row": 1, "column": 2
+    },
+    {
+      "id": "btn-drink",
+      "label": "drink",
+      "vocalization": "drink",
+      "image_id": "img-drink",
+      "background_color": "rgb(255, 167, 38)",
+      "border_color": "rgb(230, 119, 0)",
+      "row": 2, "column": 0
+    },
+    {
+      "id": "btn-yes",
+      "label": "yes",
+      "vocalization": "yes",
+      "image_id": "img-yes",
+      "background_color": "rgb(30, 136, 229)",
+      "border_color": "rgb(13, 71, 161)",
+      "row": 2, "column": 1
+    },
+    {
+      "id": "btn-no",
+      "label": "no",
+      "vocalization": "no",
+      "image_id": "img-no",
+      "background_color": "rgb(229, 57, 53)",
+      "border_color": "rgb(183, 28, 28)",
+      "row": 2, "column": 2
+    }
+  ],
+  "grid": {
+    "rows": 3,
+    "columns": 3,
+    "order": [
+      ["btn-more",  "btn-stop",  "btn-help"],
+      ["btn-want",  "btn-go",    "btn-eat"],
+      ["btn-drink", "btn-yes",   "btn-no"]
+    ]
+  },
+  "sprout_meta": {
+    "template_id": "little_communicator",
+    "age_range": "2-4",
+    "grid_size": "3x3",
+    "fitzgerald_key": true,
+    "recommended_for": "Early communicators, first AAC experience, pre-literacy"
+  }
+}

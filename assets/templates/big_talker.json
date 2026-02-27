@@ -1,0 +1,89 @@
+{
+  "format": "open-board-0.1",
+  "id": "sprout-template-big-talker",
+  "locale": "en-US",
+  "name": "Big Talker",
+  "description_html": "A 25-symbol board for established communicators (ages 7+). Full core vocabulary with pronouns, descriptors, and question words to support multi-word sentences.",
+  "license": {
+    "type": "CC By",
+    "copyright_notice_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "images": [
+    { "id": "img-i",        "url": "/opensymbols/i.png",        "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-you",      "url": "/opensymbols/you.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-we",       "url": "/opensymbols/we.png",       "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-they",     "url": "/opensymbols/they.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-help",     "url": "/opensymbols/help.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-want",     "url": "/opensymbols/want.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-like",     "url": "/opensymbols/like.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-feel",     "url": "/opensymbols/feel.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-go",       "url": "/opensymbols/go.png",       "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-stop",     "url": "/opensymbols/stop.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-have",     "url": "/opensymbols/have.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-dont",     "url": "/opensymbols/dont.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-that",     "url": "/opensymbols/that.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-put",      "url": "/opensymbols/put.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-more",     "url": "/opensymbols/more.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-good",     "url": "/opensymbols/good.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-bad",      "url": "/opensymbols/bad.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-big",      "url": "/opensymbols/big.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-little",   "url": "/opensymbols/little.png",   "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-where",    "url": "/opensymbols/where.png",    "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-eat",      "url": "/opensymbols/eat.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-drink",    "url": "/opensymbols/drink.png",    "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-play",     "url": "/opensymbols/play.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-yes",      "url": "/opensymbols/yes.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-no",       "url": "/opensymbols/no.png",       "content_type": "image/png", "width": 300, "height": 300 }
+  ],
+  "sounds": [],
+  "buttons": [
+    { "id": "btn-i",      "label": "I",       "vocalization": "I",         "image_id": "img-i",      "background_color": "rgb(255, 213, 79)",  "border_color": "rgb(245, 127, 23)", "row": 0, "column": 0 },
+    { "id": "btn-you",    "label": "you",     "vocalization": "you",       "image_id": "img-you",    "background_color": "rgb(255, 213, 79)",  "border_color": "rgb(245, 127, 23)", "row": 0, "column": 1 },
+    { "id": "btn-we",     "label": "we",      "vocalization": "we",        "image_id": "img-we",     "background_color": "rgb(255, 213, 79)",  "border_color": "rgb(245, 127, 23)", "row": 0, "column": 2 },
+    { "id": "btn-they",   "label": "they",    "vocalization": "they",      "image_id": "img-they",   "background_color": "rgb(255, 213, 79)",  "border_color": "rgb(245, 127, 23)", "row": 0, "column": 3 },
+    { "id": "btn-help",   "label": "help",    "vocalization": "help",      "image_id": "img-help",   "background_color": "rgb(255, 167, 38)",  "border_color": "rgb(230, 119, 0)",  "row": 0, "column": 4 },
+
+    { "id": "btn-want",   "label": "want",    "vocalization": "I want",    "image_id": "img-want",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 1, "column": 0 },
+    { "id": "btn-like",   "label": "like",    "vocalization": "I like",    "image_id": "img-like",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 1, "column": 1 },
+    { "id": "btn-feel",   "label": "feel",    "vocalization": "I feel",    "image_id": "img-feel",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 1, "column": 2 },
+    { "id": "btn-go",     "label": "go",      "vocalization": "go",        "image_id": "img-go",     "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 1, "column": 3 },
+    { "id": "btn-stop",   "label": "stop",    "vocalization": "stop",      "image_id": "img-stop",   "background_color": "rgb(229, 57, 53)",   "border_color": "rgb(183, 28, 28)",  "row": 1, "column": 4 },
+
+    { "id": "btn-have",   "label": "have",    "vocalization": "I have",    "image_id": "img-have",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 2, "column": 0 },
+    { "id": "btn-dont",   "label": "don't",   "vocalization": "I don't",   "image_id": "img-dont",   "background_color": "rgb(229, 57, 53)",   "border_color": "rgb(183, 28, 28)",  "row": 2, "column": 1 },
+    { "id": "btn-that",   "label": "that",    "vocalization": "that",      "image_id": "img-that",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 2, "column": 2 },
+    { "id": "btn-put",    "label": "put",     "vocalization": "put",       "image_id": "img-put",    "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 2, "column": 3 },
+    { "id": "btn-more",   "label": "more",    "vocalization": "more",      "image_id": "img-more",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 2, "column": 4 },
+
+    { "id": "btn-good",   "label": "good",    "vocalization": "good",      "image_id": "img-good",   "background_color": "rgb(171, 71, 188)",  "border_color": "rgb(106, 27, 154)", "row": 3, "column": 0 },
+    { "id": "btn-bad",    "label": "bad",     "vocalization": "bad",       "image_id": "img-bad",    "background_color": "rgb(171, 71, 188)",  "border_color": "rgb(106, 27, 154)", "row": 3, "column": 1 },
+    { "id": "btn-big",    "label": "big",     "vocalization": "big",       "image_id": "img-big",    "background_color": "rgb(171, 71, 188)",  "border_color": "rgb(106, 27, 154)", "row": 3, "column": 2 },
+    { "id": "btn-little", "label": "little",  "vocalization": "little",    "image_id": "img-little", "background_color": "rgb(171, 71, 188)",  "border_color": "rgb(106, 27, 154)", "row": 3, "column": 3 },
+    { "id": "btn-where",  "label": "where",   "vocalization": "where",     "image_id": "img-where",  "background_color": "rgb(239, 83, 80)",   "border_color": "rgb(183, 28, 28)",  "row": 3, "column": 4 },
+
+    { "id": "btn-eat",    "label": "eat",     "vocalization": "eat",       "image_id": "img-eat",    "background_color": "rgb(255, 167, 38)",  "border_color": "rgb(230, 119, 0)",  "row": 4, "column": 0 },
+    { "id": "btn-drink",  "label": "drink",   "vocalization": "drink",     "image_id": "img-drink",  "background_color": "rgb(255, 167, 38)",  "border_color": "rgb(230, 119, 0)",  "row": 4, "column": 1 },
+    { "id": "btn-play",   "label": "play",    "vocalization": "play",      "image_id": "img-play",   "background_color": "rgb(124, 179, 66)",  "border_color": "rgb(85, 139, 47)",  "row": 4, "column": 2 },
+    { "id": "btn-yes",    "label": "yes",     "vocalization": "yes",       "image_id": "img-yes",    "background_color": "rgb(30, 136, 229)",  "border_color": "rgb(13, 71, 161)",  "row": 4, "column": 3 },
+    { "id": "btn-no",     "label": "no",      "vocalization": "no",        "image_id": "img-no",     "background_color": "rgb(229, 57, 53)",   "border_color": "rgb(183, 28, 28)",  "row": 4, "column": 4 }
+  ],
+  "grid": {
+    "rows": 5,
+    "columns": 5,
+    "order": [
+      ["btn-i",    "btn-you",   "btn-we",    "btn-they",   "btn-help"],
+      ["btn-want", "btn-like",  "btn-feel",  "btn-go",     "btn-stop"],
+      ["btn-have", "btn-dont",  "btn-that",  "btn-put",    "btn-more"],
+      ["btn-good", "btn-bad",   "btn-big",   "btn-little", "btn-where"],
+      ["btn-eat",  "btn-drink", "btn-play",  "btn-yes",    "btn-no"]
+    ]
+  },
+  "sprout_meta": {
+    "template_id": "big_talker",
+    "age_range": "7+",
+    "grid_size": "5x5",
+    "fitzgerald_key": true,
+    "recommended_for": "Established communicators, multi-word sentences, literacy emerging",
+    "motor_continuity_note": "Core words from Growing Voice preserved in same grid regions. Pronouns expanded to full row 0. Descriptors added as dedicated row 3."
+  }
+}

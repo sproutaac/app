@@ -1,0 +1,194 @@
+{
+  "format": "open-board-0.1",
+  "id": "sprout-template-growing-voice",
+  "locale": "en-US",
+  "name": "Growing Voice",
+  "description_html": "A 16-symbol board for emerging communicators (ages 4–7). Expands core vocabulary with pronouns and early descriptors while keeping the most-used words in the same positions as Little Communicator.",
+  "license": {
+    "type": "CC By",
+    "copyright_notice_url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "images": [
+    { "id": "img-i",        "url": "/opensymbols/i.png",        "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-more",     "url": "/opensymbols/more.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-stop",     "url": "/opensymbols/stop.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-help",     "url": "/opensymbols/help.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-want",     "url": "/opensymbols/want.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-like",     "url": "/opensymbols/like.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-go",       "url": "/opensymbols/go.png",       "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-eat",      "url": "/opensymbols/eat.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-dont",     "url": "/opensymbols/dont.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-have",     "url": "/opensymbols/have.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-that",     "url": "/opensymbols/that.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-drink",    "url": "/opensymbols/drink.png",    "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-play",     "url": "/opensymbols/play.png",     "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-alldone",  "url": "/opensymbols/all_done.png", "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-yes",      "url": "/opensymbols/yes.png",      "content_type": "image/png", "width": 300, "height": 300 },
+    { "id": "img-no",       "url": "/opensymbols/no.png",       "content_type": "image/png", "width": 300, "height": 300 }
+  ],
+  "sounds": [],
+  "buttons": [
+    {
+      "id": "btn-i",
+      "label": "I",
+      "vocalization": "I",
+      "image_id": "img-i",
+      "background_color": "rgb(255, 213, 79)",
+      "border_color": "rgb(245, 127, 23)",
+      "row": 0, "column": 0
+    },
+    {
+      "id": "btn-more",
+      "label": "more",
+      "vocalization": "more",
+      "image_id": "img-more",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 0, "column": 1
+    },
+    {
+      "id": "btn-stop",
+      "label": "stop",
+      "vocalization": "stop",
+      "image_id": "img-stop",
+      "background_color": "rgb(229, 57, 53)",
+      "border_color": "rgb(183, 28, 28)",
+      "row": 0, "column": 2
+    },
+    {
+      "id": "btn-help",
+      "label": "help",
+      "vocalization": "help",
+      "image_id": "img-help",
+      "background_color": "rgb(255, 167, 38)",
+      "border_color": "rgb(230, 119, 0)",
+      "row": 0, "column": 3
+    },
+    {
+      "id": "btn-want",
+      "label": "want",
+      "vocalization": "I want",
+      "image_id": "img-want",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 1, "column": 0
+    },
+    {
+      "id": "btn-like",
+      "label": "like",
+      "vocalization": "I like",
+      "image_id": "img-like",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 1, "column": 1
+    },
+    {
+      "id": "btn-go",
+      "label": "go",
+      "vocalization": "go",
+      "image_id": "img-go",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 1, "column": 2
+    },
+    {
+      "id": "btn-eat",
+      "label": "eat",
+      "vocalization": "eat",
+      "image_id": "img-eat",
+      "background_color": "rgb(255, 167, 38)",
+      "border_color": "rgb(230, 119, 0)",
+      "row": 1, "column": 3
+    },
+    {
+      "id": "btn-dont",
+      "label": "don't",
+      "vocalization": "I don't",
+      "image_id": "img-dont",
+      "background_color": "rgb(229, 57, 53)",
+      "border_color": "rgb(183, 28, 28)",
+      "row": 2, "column": 0
+    },
+    {
+      "id": "btn-have",
+      "label": "have",
+      "vocalization": "I have",
+      "image_id": "img-have",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 2, "column": 1
+    },
+    {
+      "id": "btn-that",
+      "label": "that",
+      "vocalization": "that",
+      "image_id": "img-that",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 2, "column": 2
+    },
+    {
+      "id": "btn-drink",
+      "label": "drink",
+      "vocalization": "drink",
+      "image_id": "img-drink",
+      "background_color": "rgb(255, 167, 38)",
+      "border_color": "rgb(230, 119, 0)",
+      "row": 2, "column": 3
+    },
+    {
+      "id": "btn-play",
+      "label": "play",
+      "vocalization": "play",
+      "image_id": "img-play",
+      "background_color": "rgb(124, 179, 66)",
+      "border_color": "rgb(85, 139, 47)",
+      "row": 3, "column": 0
+    },
+    {
+      "id": "btn-alldone",
+      "label": "all done",
+      "vocalization": "all done",
+      "image_id": "img-alldone",
+      "background_color": "rgb(229, 57, 53)",
+      "border_color": "rgb(183, 28, 28)",
+      "row": 3, "column": 1
+    },
+    {
+      "id": "btn-yes",
+      "label": "yes",
+      "vocalization": "yes",
+      "image_id": "img-yes",
+      "background_color": "rgb(30, 136, 229)",
+      "border_color": "rgb(13, 71, 161)",
+      "row": 3, "column": 2
+    },
+    {
+      "id": "btn-no",
+      "label": "no",
+      "vocalization": "no",
+      "image_id": "img-no",
+      "background_color": "rgb(229, 57, 53)",
+      "border_color": "rgb(183, 28, 28)",
+      "row": 3, "column": 3
+    }
+  ],
+  "grid": {
+    "rows": 4,
+    "columns": 4,
+    "order": [
+      ["btn-i",    "btn-more",    "btn-stop",    "btn-help"],
+      ["btn-want", "btn-like",    "btn-go",      "btn-eat"],
+      ["btn-dont", "btn-have",    "btn-that",    "btn-drink"],
+      ["btn-play", "btn-alldone", "btn-yes",     "btn-no"]
+    ]
+  },
+  "sprout_meta": {
+    "template_id": "growing_voice",
+    "age_range": "4-7",
+    "grid_size": "4x4",
+    "fitzgerald_key": true,
+    "recommended_for": "Emerging communicators, building two-word combinations",
+    "motor_continuity_note": "Core 9 words from Little Communicator kept in same relative positions (rows 0-2, cols 1-3) to support motor memory transfer"
+  }
+}
