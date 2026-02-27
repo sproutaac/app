@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../main.dart';
 import '../../models/database.dart';
 import '../../constants/app_theme.dart';
+import '../communication/communication_screen.dart';
 
 class ProfileSelectionScreen extends ConsumerWidget {
   const ProfileSelectionScreen({super.key});
@@ -31,7 +32,7 @@ class ProfileSelectionScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    '🗣️ OpenVoice',
+                    '🌱 Sprout',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w800,
@@ -102,9 +103,11 @@ class ProfileSelectionScreen extends ConsumerWidget {
 
   void _selectProfile(
       BuildContext context, WidgetRef ref, ChildProfile profile) {
-    // TODO: Navigate to CommunicationScreen(childId: profile.id)
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Opening ${profile.name}\'s board...')),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CommunicationScreen(profile: profile),
+      ),
     );
   }
 
@@ -259,7 +262,7 @@ class _EmptyState extends StatelessWidget {
                 size: 80, color: AppColors.primaryLight),
             const SizedBox(height: 24),
             const Text(
-              'Welcome to OpenVoice',
+              'Welcome to Sprout',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
@@ -268,7 +271,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text(
-              'Create a profile to get started.\nOpenVoice is completely free — always.',
+              'Create a profile to get started.\nSprout is completely free — always.',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black54,
@@ -380,8 +383,17 @@ class _QuickAddProfileDialogState
 
     final cols = _gridSize == 9 ? 3 : _gridSize == 16 ? 4 : 5;
 
-    await widget.db.insertProfile(ChildProfilesCompanion.insert(
+    final profileId = await widget.db.insertProfile(ChildProfilesCompanion.insert(
       name: name,
+      gridColumns: Value(cols),
+      gridRows: Value(cols),
+    ));
+
+    // Create an empty home board so CommunicationScreen has something to stream
+    await widget.db.insertBoard(BoardsCompanion.insert(
+      childId: profileId,
+      name: 'Home Board',
+      isHomeBoard: const Value(true),
       gridColumns: Value(cols),
       gridRows: Value(cols),
     ));

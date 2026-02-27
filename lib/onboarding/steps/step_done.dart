@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../main.dart';
+import '../../models/database.dart';
 import '../onboarding_provider.dart';
 
 class StepDone extends ConsumerStatefulWidget {
@@ -33,11 +39,94 @@ class _StepDoneState extends ConsumerState<StepDone>
   }
 
   Future<void> _completeOnboarding() async {
-    // Mark complete in shared_preferences. Navigation is handled by
-    // OnboardingGate which listens to onboardingCompleteProvider.
-    // We delay slightly so the animation plays first.
+    // Let the animation play first
     await Future.delayed(const Duration(milliseconds: 200));
+
+    // Create the profile and board from onboarding state before marking complete.
+    // Wrapped in try/catch so a DB error never blocks the user from proceeding.
+    try {
+      await _createFromOnboarding();
+    } catch (_) {
+      // Silently fail — user can create a profile manually from the home screen
+    }
+
     await ref.read(onboardingProvider.notifier).complete();
+  }
+
+  Future<void> _createFromOnboarding() async {
+    final state = ref.read(onboardingProvider);
+    final db = ref.read(dbProvider);
+
+    final template = state.selectedTemplate;
+    final gridSize = template?.ageRange.defaultGridSize ?? 3;
+
+    final accessMethodStr =
+        state.accessMethod == AccessMethod.switchAccess ? 'switch_single' : 'touch';
+
+    // 1. Create child profile
+    final profileId = await db.insertProfile(ChildProfilesCompanion.insert(
+      name: state.childName.isNotEmpty ? state.childName : 'My Child',
+      gridColumns: Value(gridSize),
+      gridRows: Value(gridSize),
+      accessMethod: Value(accessMethodStr),
+    ));
+
+    // 2. Create home board
+    final boardId = await db.insertBoard(BoardsCompanion.insert(
+      childId: profileId,
+      name: 'Home Board',
+      isHomeBoard: const Value(true),
+      gridColumns: Value(gridSize),
+      gridRows: Value(gridSize),
+    ));
+
+    // 3. Populate cells from the selected OBF template
+    if (template != null) {
+      await _insertCellsFromTemplate(db, boardId, template);
+    }
+  }
+
+  Future<void> _insertCellsFromTemplate(
+    AppDatabase db,
+    int boardId,
+    StarterTemplate template,
+  ) async {
+    final jsonStr = await rootBundle.loadString(template.assetPath);
+    final json = jsonDecode(jsonStr) as Map<String, dynamic>;
+
+    for (final btn in (json['buttons'] as List<dynamic>)) {
+      final label = btn['label'] as String;
+      final vocalization = btn['vocalization'] as String?;
+      final bgHex = _rgbToHex(btn['background_color'] as String? ?? '');
+
+      // Only store speakText when it differs from label (e.g. "want" → "I want")
+      final speakText =
+          vocalization != null && vocalization != label ? vocalization : null;
+
+      await db.upsertCell(BoardCellsCompanion.insert(
+        boardId: boardId,
+        rowIndex: btn['row'] as int,
+        colIndex: btn['column'] as int,
+        label: label,
+        speakText: Value(speakText),
+        backgroundColor: Value(bgHex),
+        textColor: const Value('#FFFFFF'),
+      ));
+    }
+  }
+
+  /// Converts "rgb(124, 179, 66)" → "#7cb342"
+  String _rgbToHex(String rgb) {
+    final match =
+        RegExp(r'rgb\((\d+),\s*(\d+),\s*(\d+)\)').firstMatch(rgb);
+    if (match == null) return '#4A90D9';
+    final r = int.parse(match.group(1)!);
+    final g = int.parse(match.group(2)!);
+    final b = int.parse(match.group(3)!);
+    return '#'
+        '${r.toRadixString(16).padLeft(2, '0')}'
+        '${g.toRadixString(16).padLeft(2, '0')}'
+        '${b.toRadixString(16).padLeft(2, '0')}';
   }
 
   @override

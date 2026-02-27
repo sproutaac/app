@@ -1,16 +1,16 @@
-# 🗣️ OpenVoice AAC
+# 🌱 Sprout AAC
 
 **A free, open-source Augmentative and Alternative Communication (AAC) app for children with autism, cerebral palsy, and developmental delays.**
 
-OpenVoice exists because no child should be without a voice due to cost. Every feature is free. Always.
+Sprout exists because no child should be without a voice due to cost. Every feature is free. Always.
 
 ---
 
-## Why OpenVoice?
+## Why Sprout?
 
 The leading AAC apps cost $249+. Research shows only **32% of minority families** have access to an AAC device versus 84% of white families. The last widely-used free alternative (Cboard) moved behind a paywall in 2024.
 
-OpenVoice is permanently free, open-source, and built with the AAC community — not just for it.
+Sprout is permanently free, open-source, and built with the AAC community — not just for it.
 
 ---
 
@@ -24,18 +24,20 @@ OpenVoice is permanently free, open-source, and built with the AAC community —
 
 ---
 
-## Features (Roadmap)
+## Features
 
 ### v0.1 — MVP (current)
-- [ ] Multi-child profiles
-- [ ] Customizable symbol boards (3×3 to 5×5)
-- [ ] OpenSymbols integration (4000+ free symbols)
-- [ ] Native offline TTS (no API key needed)
-- [ ] Caregiver edit mode (PIN-gated)
-- [ ] On-device word prediction (bigram model)
+- [x] Guided onboarding flow (5-step setup wizard)
+- [x] Three starter boards: Little Communicator (3×3), Growing Voice (4×4), Big Talker (5×5)
+- [x] Open Board Format (OBF) templates with Fitzgerald Key color coding
+- [x] Communication screen with sentence bar and native offline TTS
+- [x] Multi-child profiles
+- [ ] OpenSymbols integration (4,000+ free symbols — API stub ready)
+- [ ] Caregiver edit mode (PIN-gated board editor)
+- [ ] On-device word prediction (bigram model — schema + DB methods ready)
 
 ### v0.2 — Sharing
-- [ ] Open Board Format (OBF) import/export
+- [ ] OBF import/export (stubs in place)
 - [ ] Board sharing via share code
 - [ ] SLP → family board push
 
@@ -56,11 +58,12 @@ OpenVoice is permanently free, open-source, and built with the AAC community —
 | Layer | Choice | Why |
 |---|---|---|
 | Framework | Flutter | Single codebase, iOS + Android |
-| Database | Drift (SQLite) | Offline-first, type-safe |
-| State | Riverpod | Predictable, testable |
-| TTS | flutter_tts (native) | Free, offline, no API |
-| Symbols | OpenSymbols API | Free, open-licensed |
-| Cloud sync | Supabase (optional) | Generous free tier |
+| Database | Drift (SQLite) | Offline-first, type-safe, generated queries |
+| State | Riverpod | Predictable, testable, no BuildContext leaks |
+| TTS | flutter_tts (native) | Free, offline, no API key |
+| Symbols | OpenSymbols API | Free, open-licensed, 4k+ symbols |
+| Onboarding | SharedPreferences | Lightweight, no extra infrastructure |
+| Cloud sync | Supabase (optional) | Generous free tier, additive only |
 
 ---
 
@@ -74,8 +77,8 @@ OpenVoice is permanently free, open-source, and built with the AAC community —
 ### Setup
 
 ```bash
-git clone https://github.com/your-username/openvoice-aac.git
-cd openvoice-aac
+git clone https://github.com/sproutaac/app.git
+cd app
 
 # Install dependencies
 flutter pub get
@@ -93,34 +96,47 @@ flutter run
 
 ```
 lib/
-├── main.dart                    # Entry point
+├── main.dart                        # Entry point, ProviderScope, OnboardingGate
 ├── constants/
-│   └── app_theme.dart           # Design system, colors, typography
+│   └── app_theme.dart               # Design system, Fitzgerald Key colors
 ├── models/
-│   └── database.dart            # Drift schema (all data models)
+│   └── database.dart                # Drift schema (profiles, boards, cells, usage)
+├── onboarding/
+│   ├── onboarding.dart              # Library barrel + integration guide
+│   ├── onboarding_flow.dart         # OnboardingGate + OnboardingFlow (PageView)
+│   ├── onboarding_provider.dart     # State: name, age, template, access method
+│   ├── onboarding_widgets.dart      # Shared step UI components
+│   └── steps/
+│       ├── step_welcome.dart        # Green gradient splash
+│       ├── step_profile.dart        # Name + age range + access method
+│       ├── step_template.dart       # Starter board picker with mini grid preview
+│       ├── step_personalize.dart    # Favorite symbol search (OpenSymbols stub)
+│       └── step_done.dart           # Creates profile + board in DB, marks complete
 ├── services/
-│   ├── tts_service.dart         # Text-to-speech wrapper
-│   └── symbol_service.dart      # OpenSymbols API + local cache
-├── providers/                   # Riverpod state providers
+│   ├── tts_service.dart             # flutter_tts wrapper, per-child voice settings
+│   └── symbol_service.dart          # OpenSymbols API + local cache
 ├── screens/
 │   ├── home/
-│   │   └── profile_selection_screen.dart
-│   ├── editor/                  # Caregiver board editor
-│   └── settings/                # Profile & app settings
+│   │   └── profile_selection_screen.dart  # Who's communicating today?
+│   └── communication/
+│       └── communication_screen.dart      # Main board view + sentence bar
 └── widgets/
-    ├── grid/
-    │   └── communication_grid.dart  # Core AAC grid UI
-    ├── symbol/                  # Symbol picker, display
-    └── toolbar/                 # Sentence bar, back button
+    └── grid/
+        └── communication_grid.dart  # AAC grid, switch scanning, tap animation
+assets/
+└── templates/
+    ├── little_communicator.json     # OBF 3×3 starter board (ages 2–4)
+    ├── growing_voice.json           # OBF 4×4 starter board (ages 4–7)
+    └── big_talker.json              # OBF 5×5 starter board (ages 7+)
 ```
 
 ---
 
 ## Contributing
 
-OpenVoice is built with the AAC community. We especially welcome:
+Sprout is built with the AAC community. We especially welcome:
 - **SLPs** — clinical expertise on vocabulary, motor planning, and board design
-- **AAC users and families** — lived experience that no spec can replace  
+- **AAC users and families** — lived experience that no spec can replace
 - **Developers** — Flutter, accessibility, offline-first architecture
 - **Translators** — AAC must be accessible across languages
 
@@ -138,7 +154,7 @@ MIT License — free to use, fork, and build upon. See [LICENSE](LICENSE).
 
 ## Funding
 
-OpenVoice is funded by grants and donations. We will never charge families.
+Sprout is funded by grants and donations. We will never charge families.
 
 If you're an organization that wants to support this work:
 - [Donate via Open Collective](#) *(coming soon)*

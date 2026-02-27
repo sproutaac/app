@@ -16,6 +16,9 @@ build/
 # macOS
 .DS_Store
 
+# Local notes / drafts
+COMMUNITY_POSTS.md
+
 # Env / secrets
 .env
 *.env
