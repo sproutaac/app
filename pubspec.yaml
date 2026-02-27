@@ -1,0 +1,70 @@
+name: sprout_aac
+description: A free, open-source AAC app for children with autism, cerebral palsy, and developmental delays.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Database - offline-first local storage
+  drift: ^2.14.1
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.1.1
+  path: ^1.8.3
+
+  # Text-to-speech - native, offline, no API needed
+  flutter_tts: ^3.8.5
+
+  # State management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Cloud sync (optional, additive only)
+  supabase_flutter: ^2.3.4
+
+  # HTTP for OpenSymbols API when online
+  dio: ^5.4.0
+
+  # Image handling (custom symbols from camera/gallery)
+  image_picker: ^1.0.7
+  cached_network_image: ^3.3.1
+
+  # Open Board Format import/export
+  archive: ^3.4.9
+
+  # Connectivity detection
+  connectivity_plus: ^5.0.2
+
+  # Secure storage for caregiver PIN
+  flutter_secure_storage: ^9.0.0
+
+  # UUID generation
+  uuid: ^4.3.3
+
+  # JSON serialization
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  drift_dev: ^2.14.1
+  build_runner: ^2.4.8
+  riverpod_generator: ^2.3.9
+  json_serializable: ^6.7.1
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/symbols/
+    - assets/images/
+  fonts:
+    - family: OpenDyslexic
+      fonts:
+        - asset: assets/fonts/OpenDyslexic-Regular.otf
+        - asset: assets/fonts/OpenDyslexic-Bold.otf
+          weight: 700
