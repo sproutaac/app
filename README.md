@@ -148,7 +148,7 @@ Join the conversation: [OpenAAC Discord](https://discord.gg/TEH8uxh)
 
 ## License
 
-MIT License — free to use, fork, and build upon. See [LICENSE](LICENSE).
+GPL v3 — free to use, fork, and build upon. Any app built on Sprout must also be open source. See [LICENSE](LICENSE).
 
 ---
 
