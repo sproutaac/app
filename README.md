@@ -4,6 +4,8 @@
 
 Sprout exists because no child should be without a voice due to cost. Every feature is free. Always.
 
+> **Status: pre-release — not yet on the App Store or Google Play.** We're building in public and the code runs, but the app isn't downloadable yet. [Join the waitlist](https://sproutaac.org) to be notified on launch.
+
 ---
 
 ## Why Sprout?
@@ -156,9 +158,7 @@ GPL v3 — free to use, fork, and build upon. Any app built on Sprout must also 
 
 Sprout is funded by grants and donations. We will never charge families.
 
-If you're an organization that wants to support this work:
-- [Donate via Open Collective](#) *(coming soon)*
-- Contact us about partnership or grant matching
+If you're an organization that wants to support this work, email [hello@sproutaac.org](mailto:hello@sproutaac.org). Donation links coming once we launch.
 
 ---
 

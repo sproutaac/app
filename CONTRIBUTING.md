@@ -70,6 +70,24 @@ Every change must pass these before it ships:
 
 ---
 
+## Tests
+
+Test coverage is minimal right now — the project is pre-launch and moving fast. We'd especially love help adding tests for:
+
+- Grid behaviour and cell rendering (critical: motor planning stability must never regress)
+- `AppDatabase` query methods in `models/database.dart`
+- TTS service edge cases (empty sentence bar, rapid taps)
+
+When adding tests, use the standard `flutter_test` package. Run the suite with:
+
+```bash
+~/development/bin/flutter test
+```
+
+If you're not sure where to start, opening an issue tagged `testing` to discuss scope is very welcome.
+
+---
+
 ## Localization
 
 AAC must work across languages. If you want to add a language:
