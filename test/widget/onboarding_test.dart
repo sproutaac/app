@@ -94,4 +94,54 @@ void main() {
     expect(find.text("Let's go"), findsOneWidget);
   });
 
+  testWidgets("OnboardingFlow: Let's go advances to profile step",
+      (tester) async {
+    // StepProfile overflows the default 600px height — use 1100px
+    await tester.binding.setSurfaceSize(const Size(800, 1100));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(home: OnboardingFlow()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text("Let's go"));
+    await tester.pump(); // kick off the PageController slide animation
+    // Advance past the 350ms page-slide animation
+    await tester.pump(const Duration(milliseconds: 400));
+
+    // Progress dots appear (currentPage = 1, between welcome and done)
+    expect(find.byType(AnimatedContainer), findsWidgets);
+    // Profile step's name TextField is visible
+    expect(find.byType(TextField), findsOneWidget);
+  });
+
+  testWidgets('OnboardingFlow: Back button on profile step returns to welcome',
+      (tester) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1100));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(home: OnboardingFlow()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Go to profile step
+    await tester.tap(find.text("Let's go"));
+    await tester.pump(); // kick off animation
+    await tester.pump(const Duration(milliseconds: 400));
+
+    // Go back
+    await tester.tap(find.text('Back'));
+    await tester.pump(); // kick off animation
+    await tester.pump(const Duration(milliseconds: 400));
+
+    // Welcome step visible again
+    expect(find.text('Sprout'), findsOneWidget);
+    expect(find.text("Let's go"), findsOneWidget);
+  });
 }

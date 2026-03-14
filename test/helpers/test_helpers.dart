@@ -66,7 +66,7 @@ void stubTtsService(MockTtsService svc) {
 
 void mockSecureStorage({String? storedPin}) {
   const channel =
-      MethodChannel('plugins.it_expertise.com/flutter_secure_storage');
+      MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, (call) async {
     switch (call.method) {
@@ -86,7 +86,7 @@ void mockSecureStorage({String? storedPin}) {
 
 void clearSecureStorageMock() {
   const channel =
-      MethodChannel('plugins.it_expertise.com/flutter_secure_storage');
+      MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, null);
 }

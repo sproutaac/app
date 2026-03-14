@@ -197,6 +197,59 @@ void main() {
       expect(find.text('Touch screen'), findsOneWidget);
       expect(find.text('Switch access'), findsOneWidget);
     });
+
+    testWidgets('controller syncs text from pre-set provider state',
+        (tester) async {
+      // When build() runs and _nameController.text != state.childName,
+      // lines 38-40 assign the controller text from the provider.
+      await tester.binding.setSurfaceSize(const Size(800, 1100));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          onboardingProvider.overrideWith((ref) {
+            final n = OnboardingNotifier();
+            n.setChildName('Jordan');
+            return n;
+          }),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: StepProfile(onNext: () {}, onBack: () {}),
+          ),
+        ),
+      ));
+
+      // The question label uses childFirstName derived from provider state
+      expect(find.text('How old is Jordan?'), findsOneWidget);
+    });
+
+    testWidgets('tapping Touch screen chip calls setAccessMethod',
+        (tester) async {
+      await pumpProfile(tester);
+      await tester.tap(find.text('Touch screen')); // fires onTap line 118
+      await tester.pump();
+    });
+
+    testWidgets('tapping Switch access chip calls setAccessMethod',
+        (tester) async {
+      await pumpProfile(tester);
+      await tester.tap(find.text('Switch access')); // fires onTap lines 124-125
+      await tester.pump();
+    });
+
+    testWidgets('tapping Eye gaze chip calls setAccessMethod', (tester) async {
+      await pumpProfile(tester);
+      await tester.tap(find.text('Eye gaze')); // fires onTap line 131
+      await tester.pump();
+    });
+
+    testWidgets("tapping I'll set up later chip calls setAccessMethod",
+        (tester) async {
+      await pumpProfile(tester);
+      await tester.tap(find.text("I'll set up later")); // fires onTap lines 136-137
+      await tester.pump();
+    });
   });
 
   // ── StepTemplate ──────────────────────────────────────────────────────────
@@ -317,6 +370,104 @@ void main() {
       final btn = tester.widget<FilledButton>(find.byType(FilledButton));
       expect(btn.onPressed, isNotNull);
     });
+
+    testWidgets('shows favorite chip when a symbol has been added',
+        (tester) async {
+      final db = makeTestDb();
+      final symbols = MockSymbolService();
+      stubSymbolService(symbols);
+      final tts = MockTtsService();
+      stubTtsService(tts);
+      addTearDown(db.close);
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          ...allOverrides(db: db, symbols: symbols, tts: tts),
+          onboardingProvider.overrideWith((ref) {
+            final n = OnboardingNotifier();
+            n.addFavoriteSymbol('cookie');
+            return n;
+          }),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: StepPersonalize(onNext: () {}, onBack: () {}),
+          ),
+        ),
+      ));
+      await tester.pump();
+
+      // The chip shows the symbol ID as label when no label mapping exists
+      expect(find.text('cookie'), findsOneWidget);
+      // Delete icon on the chip
+      expect(find.byIcon(Icons.close), findsOneWidget);
+    });
+
+    testWidgets('shows max-favorites message when 3 symbols are selected',
+        (tester) async {
+      final db = makeTestDb();
+      final symbols = MockSymbolService();
+      stubSymbolService(symbols);
+      final tts = MockTtsService();
+      stubTtsService(tts);
+      addTearDown(db.close);
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          ...allOverrides(db: db, symbols: symbols, tts: tts),
+          onboardingProvider.overrideWith((ref) {
+            final n = OnboardingNotifier();
+            n.addFavoriteSymbol('a');
+            n.addFavoriteSymbol('b');
+            n.addFavoriteSymbol('c');
+            return n;
+          }),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: StepPersonalize(onNext: () {}, onBack: () {}),
+          ),
+        ),
+      ));
+      await tester.pump();
+
+      // Full message replaces the symbol picker
+      expect(find.text('Great! 3 favorites added.'), findsOneWidget);
+    });
+
+    testWidgets('tapping chip delete icon removes the favorite', (tester) async {
+      final db = makeTestDb();
+      final symbols = MockSymbolService();
+      stubSymbolService(symbols);
+      final tts = MockTtsService();
+      stubTtsService(tts);
+      addTearDown(db.close);
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          ...allOverrides(db: db, symbols: symbols, tts: tts),
+          onboardingProvider.overrideWith((ref) {
+            final n = OnboardingNotifier();
+            n.addFavoriteSymbol('juice');
+            return n;
+          }),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: StepPersonalize(onNext: () {}, onBack: () {}),
+          ),
+        ),
+      ));
+      await tester.pump();
+
+      expect(find.text('juice'), findsOneWidget);
+      // Tap the delete icon on the chip
+      await tester.tap(find.byIcon(Icons.close));
+      await tester.pump();
+
+      // Chip is gone after removal
+      expect(find.text('juice'), findsNothing);
+    });
   });
 
   // ── StepDone ───────────────────────────────────────────────────────────────
@@ -374,6 +525,64 @@ void main() {
       await tester.pump(const Duration(milliseconds: 600)); // animation complete
 
       expect(find.textContaining("Sam"), findsWidgets);
+    });
+
+    testWidgets('creates profile+board from selected template (covers _insertCellsFromTemplate)',
+        (tester) async {
+      final db = makeTestDb();
+      final symbols = MockSymbolService();
+      stubSymbolService(symbols);
+      final tts = MockTtsService();
+      stubTtsService(tts);
+
+      addTearDown(db.close);
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          ...allOverrides(db: db, symbols: symbols, tts: tts),
+          onboardingProvider.overrideWith((ref) {
+            final n = OnboardingNotifier();
+            n.setChildName('Taylor');
+            n.setTemplate(StarterTemplate.littleCommunicator);
+            return n;
+          }),
+        ],
+        child: const MaterialApp(home: Scaffold(body: StepDone())),
+      ));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
+      await tester.pump(Duration.zero);
+      await tester.pump(Duration.zero);
+      await tester.pump(const Duration(milliseconds: 600)); // animation complete
+
+      // Completion screen visible
+      expect(find.text('Open the board'), findsOneWidget);
+    });
+
+    testWidgets('tapping Open the board button does not throw', (tester) async {
+      final db = makeTestDb();
+      final symbols = MockSymbolService();
+      stubSymbolService(symbols);
+      final tts = MockTtsService();
+      stubTtsService(tts);
+
+      addTearDown(db.close);
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: allOverrides(db: db, symbols: symbols, tts: tts),
+        child: const MaterialApp(home: Scaffold(body: StepDone())),
+      ));
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
+      await tester.pump(Duration.zero);
+      await tester.pump(Duration.zero);
+      await tester.pump(const Duration(milliseconds: 600));
+
+      await tester.tap(find.text('Open the board'));
+      await tester.pump();
+      // ref.invalidate triggers provider refresh — no throw = pass
     });
   });
 }

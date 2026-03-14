@@ -260,4 +260,136 @@ void main() {
 
     await _driftFlush(tester);
   });
+
+  testWidgets('prediction strip shows words after seeding prediction data',
+      (tester) async {
+    // Seed the bigram model: after 'more', suggest 'please'
+    await db.updatePredictionWeight(profile.id, 'more', 'please');
+
+    await tester.pumpWidget(
+        _wrap(profile: profile, db: db, tts: tts, symbols: symbols));
+    await tester.pumpAndSettle();
+
+    // Tap 'more' to set _lastLabel and trigger prediction strip
+    await tester.tap(find.text('more'));
+    await tester.pump(); // state update → _lastLabel = 'more', strip built
+    await tester.pump(); // FutureBuilder fires getPredictions
+    await tester.pumpAndSettle(); // data loads → strip renders
+
+    // 'please' should appear as a prediction chip
+    expect(find.text('please'), findsOneWidget);
+
+    await _driftFlush(tester);
+  });
+
+  testWidgets('tapping a prediction chip speaks the word and adds it to sentence',
+      (tester) async {
+    await db.updatePredictionWeight(profile.id, 'more', 'please');
+
+    await tester.pumpWidget(
+        _wrap(profile: profile, db: db, tts: tts, symbols: symbols));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('more'));
+    await tester.pump();
+    await tester.pump();
+    await tester.pumpAndSettle();
+
+    expect(find.text('please'), findsOneWidget);
+
+    // Tap the prediction chip
+    await tester.tap(find.text('please'));
+    await tester.pumpAndSettle();
+
+    // 'please' should now appear in the sentence bar
+    expect(find.text('please'), findsWidgets);
+    verify(() => tts.speak('please')).called(greaterThanOrEqualTo(1));
+
+    await _driftFlush(tester);
+  });
+
+  testWidgets('edit mode button is always visible in the sentence bar',
+      (tester) async {
+    await tester.pumpWidget(
+        _wrap(profile: profile, db: db, tts: tts, symbols: symbols));
+    await tester.pumpAndSettle();
+
+    // The edit pencil icon is always shown in the sentence bar
+    expect(find.byIcon(Icons.edit_outlined), findsOneWidget);
+
+    await _driftFlush(tester);
+  });
+
+  testWidgets('tapping home icon pops communication screen', (tester) async {
+    // Push CommunicationScreen from a parent so Navigator.pop has a route to return to.
+    await tester.pumpWidget(ProviderScope(
+      overrides: allOverrides(db: db, symbols: symbols, tts: tts),
+      child: MaterialApp(
+        home: Builder(
+          builder: (ctx) => TextButton(
+            onPressed: () => Navigator.push(
+              ctx,
+              MaterialPageRoute(
+                builder: (_) => CommunicationScreen(profile: profile),
+              ),
+            ),
+            child: const Text('open'),
+          ),
+        ),
+      ),
+    ));
+
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.home_outlined), findsOneWidget);
+
+    // Tap the home/back icon — fires onBack: () => Navigator.pop(context) line 109
+    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tester.pumpAndSettle();
+
+    expect(find.text('open'), findsOneWidget);
+    await _driftFlush(tester);
+  });
+
+  testWidgets('tapping edit icon navigates to EditorScreen', (tester) async {
+    mockSecureStorage();
+    addTearDown(clearSecureStorageMock);
+
+    await tester.pumpWidget(
+        _wrap(profile: profile, db: db, tts: tts, symbols: symbols));
+    await tester.pumpAndSettle(); // _loadBoard completes → _homeBoard is set
+
+    // Tap the edit icon — fires onEditMode: Navigator.push(EditorScreen) lines 117-124
+    await tester.tap(find.byIcon(Icons.edit_outlined));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400)); // route animation + PIN dialog
+
+    expect(find.text('✏️ Edit Mode'), findsOneWidget);
+    await _driftFlush(tester);
+  });
+
+  testWidgets(
+      'prediction strip with two predictions fires separatorBuilder',
+      (tester) async {
+    // Seed two bigram weights so getPredictions returns 2 results.
+    // The ListView.separated separatorBuilder (line 233) only fires when count >= 2.
+    await db.updatePredictionWeight(profile.id, 'more', 'please');
+    await db.updatePredictionWeight(profile.id, 'more', 'help');
+
+    await tester.pumpWidget(
+        _wrap(profile: profile, db: db, tts: tts, symbols: symbols));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('more'));
+    await tester.pump(); // state update → _lastLabel = 'more'
+    await tester.pump(); // FutureBuilder fires
+    await tester.pumpAndSettle(); // predictions load
+
+    // Both predictions render (separator fired between them)
+    expect(find.text('please'), findsOneWidget);
+    expect(find.text('help'), findsOneWidget);
+
+    await _driftFlush(tester);
+  });
 }
