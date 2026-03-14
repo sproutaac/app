@@ -142,7 +142,7 @@ assets/
 
 ## Testing
 
-**124 tests · all passing**
+**192 tests · all passing · 91% line coverage**
 
 Run the full suite:
 
@@ -175,7 +175,9 @@ genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 - `profile_selection_test.dart` — empty state, profile cards, quick-add dialog
 - `communication_screen_test.dart` — sentence bar, speak/backspace/clear cells, speak-all, no-board/empty-board placeholders
 - `communication_grid_test.dart` — tap actions (speak, navigate, backspace, clear), invisible cells
-- `editor_test.dart` — new/edit cell, save, delete confirmation, action type switching
+- `editor_test.dart` — PIN set/verify flow (including Enter-key submit), Done button pop, tap empty slot / filled cell to open `CellEditorSheet`, new/edit cell, save, delete confirmation, action type switching
+- `editor_screen_test.dart` — additional `_EditableGrid` / `_EditableCell` unit scenarios
+- `tts_service_test.dart` — `TtsService` platform channel interactions
 - `symbol_picker_test.dart` — search states: spinner, no results, results, selection, offline error
 - `onboarding_test.dart` — `OnboardingGate` gating logic (complete, not complete, error, loading)
 - `onboarding_steps_test.dart` — all five onboarding steps + shared UI components (`OnboardingStepShell`, `OnboardingHeading`, `OnboardingContinueButton`); covers `step_profile`, `step_template`, `step_personalize`, `step_done`, `onboarding_widgets`
@@ -186,7 +188,7 @@ genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 - `FlutterSecureStorage` is mocked via `TestDefaultBinaryMessengerBinding.setMockMethodCallHandler` in `test/helpers/test_helpers.dart`.
 - Widgets with `AnimationController` use `pump(Duration)` instead of `pumpAndSettle()` to avoid timeouts.
 - `StepProfile` uses `tester.binding.setSurfaceSize(const Size(800, 1100))` to prevent layout overflow in the default test viewport.
-- The EditorScreen PIN dialog cannot be widget-tested in isolation because the screen uses a `static const FlutterSecureStorage` field (no injection point). PIN UX is covered by manual / integration testing.
+- The EditorScreen PIN dialogs are tested via `TestDefaultBinaryMessengerBinding.setMockMethodCallHandler` on the `flutter_secure_storage` platform channel — no dependency injection required.
 
 ---
 
