@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../main.dart';
 import '../../models/database.dart';
+import '../../services/symbol_service.dart';
 import '../onboarding_provider.dart';
 
 class StepDone extends ConsumerStatefulWidget {
@@ -93,13 +94,31 @@ class _StepDoneState extends ConsumerState<StepDone>
   ) async {
     final jsonStr = await rootBundle.loadString(template.assetPath);
     final json = jsonDecode(jsonStr) as Map<String, dynamic>;
+    final buttons = json['buttons'] as List<dynamic>;
 
-    for (final btn in (json['buttons'] as List<dynamic>)) {
+    final symbolService = ref.read(symbolServiceProvider);
+
+    // Fetch all symbol images in parallel (not sequentially).
+    // Each label is unique, so we fetch once per word and reuse.
+    final uniqueLabels = buttons.map((b) => b['label'] as String).toSet();
+    final symbolUrls = <String, String?>{};
+
+    await Future.wait(
+      uniqueLabels.map((label) async {
+        try {
+          final results = await symbolService.search(label);
+          symbolUrls[label] = results.isNotEmpty ? results.first.imageUrl : null;
+        } catch (_) {
+          symbolUrls[label] = null;
+        }
+      }),
+    );
+
+    // Insert all cells with their pre-fetched image URLs.
+    for (final btn in buttons) {
       final label = btn['label'] as String;
       final vocalization = btn['vocalization'] as String?;
       final bgHex = _rgbToHex(btn['background_color'] as String? ?? '');
-
-      // Only store speakText when it differs from label (e.g. "want" → "I want")
       final speakText =
           vocalization != null && vocalization != label ? vocalization : null;
 
@@ -111,6 +130,7 @@ class _StepDoneState extends ConsumerState<StepDone>
         speakText: Value(speakText),
         backgroundColor: Value(bgHex),
         textColor: const Value('#FFFFFF'),
+        symbolUrl: Value(symbolUrls[label]),
       ));
     }
   }
@@ -209,9 +229,9 @@ class _StepDoneState extends ConsumerState<StepDone>
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () {
-                      // onboardingCompleteProvider will now return true,
-                      // and OnboardingGate will rebuild showing the main app.
-                      // No explicit navigation needed — Riverpod handles it.
+                      // Force OnboardingGate to re-read SharedPreferences
+                      // (now true) so it swaps to ProfileSelectionScreen.
+                      ref.invalidate(onboardingCompleteProvider);
                     },
                     style: FilledButton.styleFrom(
                       backgroundColor: Colors.white,

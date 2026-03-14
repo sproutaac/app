@@ -140,6 +140,9 @@ class PredictionWeights extends Table {
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
+  /// In-memory database for tests only.
+  AppDatabase.forTesting(QueryExecutor e) : super(e);
+
   @override
   int get schemaVersion => 1;
 
@@ -187,6 +190,17 @@ class AppDatabase extends _$AppDatabase {
 
   Future<int> upsertCell(BoardCellsCompanion cell) =>
       into(boardCells).insertOnConflictUpdate(cell);
+
+  /// One-shot (non-streaming) cell query — use in contexts where a
+  /// Stream is not needed (e.g. widget tests inside a FakeAsync zone).
+  Future<List<BoardCell>> getCellsForBoard(int boardId) =>
+      (select(boardCells)
+            ..where((c) => c.boardId.equals(boardId))
+            ..orderBy([
+              (c) => OrderingTerm(expression: c.rowIndex),
+              (c) => OrderingTerm(expression: c.colIndex),
+            ]))
+          .get();
 
   Future<void> deleteCell(int cellId) =>
       (delete(boardCells)..where((c) => c.id.equals(cellId))).go();

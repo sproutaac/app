@@ -59,6 +59,7 @@ dev_dependencies:
   riverpod_generator: ^2.3.9
   json_serializable: ^6.7.1
   flutter_lints: ^3.0.1
+  mocktail: ^1.0.4
 
 flutter:
   uses-material-design: true
@@ -68,9 +69,4 @@ flutter:
     - assets/templates/little_communicator.json
     - assets/templates/growing_voice.json
     - assets/templates/big_talker.json
-  fonts:
-    - family: OpenDyslexic
-      fonts:
-        - asset: assets/fonts/OpenDyslexic-Regular.otf
-        - asset: assets/fonts/OpenDyslexic-Bold.otf
-          weight: 700
+  # fonts:  # OpenDyslexic — add assets/fonts/OpenDyslexic-Regular.otf + Bold.otf to enable

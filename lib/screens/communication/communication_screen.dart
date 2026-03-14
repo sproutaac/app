@@ -15,6 +15,7 @@ import '../../main.dart';
 import '../../models/database.dart';
 import '../../services/tts_service.dart';
 import '../../widgets/grid/communication_grid.dart';
+import '../editor/editor_screen.dart';
 
 class CommunicationScreen extends ConsumerStatefulWidget {
   final ChildProfile profile;
@@ -29,6 +30,8 @@ class _CommunicationScreenState extends ConsumerState<CommunicationScreen> {
   final List<String> _words = [];
   Board? _homeBoard;
   bool _loading = true;
+  // The last spoken word — drives word prediction strip.
+  String? _lastLabel;
 
   @override
   void initState() {
@@ -62,12 +65,29 @@ class _CommunicationScreenState extends ConsumerState<CommunicationScreen> {
       switch (cell.actionType) {
         case 'speak':
           _words.add(cell.speakText ?? cell.label);
+          _lastLabel = cell.label;
         case 'backspace':
           if (_words.isNotEmpty) _words.removeLast();
+          // Keep _lastLabel so predictions stay relevant.
         case 'clear':
           _words.clear();
+          _lastLabel = null;
       }
     });
+  }
+
+  Future<void> _onPredictionTapped(String word) async {
+    final prev = _lastLabel;
+    setState(() {
+      _words.add(word);
+      _lastLabel = word;
+    });
+    final db = ref.read(dbProvider);
+    final tts = ref.read(ttsServiceProvider);
+    await tts.speak(word);
+    if (prev != null) {
+      await db.updatePredictionWeight(widget.profile.id, prev, word);
+    }
   }
 
   Future<void> _speakAll() async {
@@ -94,14 +114,29 @@ class _CommunicationScreenState extends ConsumerState<CommunicationScreen> {
                 }
               },
               onClear: () => setState(() => _words.clear()),
-              onEditMode: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Edit mode — coming in a future update'),
-                  duration: Duration(seconds: 2),
-                ),
-              ),
+              onEditMode: () {
+                if (_homeBoard != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => EditorScreen(
+                        board: _homeBoard!,
+                        profile: widget.profile,
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
             const Divider(height: 1, thickness: 1, color: Color(0xFFE2E8F0)),
+            if (_lastLabel != null)
+              _PredictionStrip(
+                key: ValueKey(_lastLabel),
+                lastLabel: _lastLabel!,
+                childId: widget.profile.id,
+                db: db,
+                onTap: _onPredictionTapped,
+              ),
             Expanded(child: _buildGrid(db)),
           ],
         ),
@@ -141,6 +176,86 @@ class _CommunicationScreenState extends ConsumerState<CommunicationScreen> {
             accessMethod: widget.profile.accessMethod,
             scanSpeedMs: widget.profile.scanSpeedMs,
             onCellTapped: _onCellTapped,
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ─── Prediction Strip ─────────────────────────────────────────────────────────
+// Shown below the sentence bar when a word has been spoken.
+// Keyed on lastLabel so it re-fetches whenever the preceding word changes.
+
+class _PredictionStrip extends StatefulWidget {
+  final String lastLabel;
+  final int childId;
+  final AppDatabase db;
+  final Future<void> Function(String word) onTap;
+
+  const _PredictionStrip({
+    super.key,
+    required this.lastLabel,
+    required this.childId,
+    required this.db,
+    required this.onTap,
+  });
+
+  @override
+  State<_PredictionStrip> createState() => _PredictionStripState();
+}
+
+class _PredictionStripState extends State<_PredictionStrip> {
+  late Future<List<String>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = widget.db.getPredictions(widget.childId, widget.lastLabel);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<String>>(
+      future: _future,
+      builder: (context, snapshot) {
+        final predictions = snapshot.data ?? [];
+        if (predictions.isEmpty) return const SizedBox.shrink();
+
+        return Container(
+          height: 44,
+          color: AppColors.surface,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            itemCount: predictions.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            itemBuilder: (context, i) {
+              final word = predictions[i];
+              return InkWell(
+                onTap: () => widget.onTap(word),
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 14, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                        color: AppColors.primaryLight, width: 1.5),
+                  ),
+                  child: Text(
+                    word,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         );
       },

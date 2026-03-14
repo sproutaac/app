@@ -24,6 +24,12 @@ COMMUNITY_POSTS.md
 *.env
 supabase/.env
 
+# Test coverage output
+coverage/
+
+# Wrangler
+.wrangler/
+
 # Assets (not tracked — too large / user-generated)
 assets/symbols/*
 assets/fonts/*

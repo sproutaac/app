@@ -4,6 +4,7 @@
 // Core symbol set bundled at install; extras fetched on demand.
 // ============================================================
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,12 +29,17 @@ class AacSymbol {
 
   bool get isAvailableOffline => localPath != null;
 
-  factory AacSymbol.fromOpenSymbolsJson(Map<String, dynamic> json) {
+  factory AacSymbol.fromArasaacJson(Map<String, dynamic> json) {
+    final id = json['_id'].toString();
+    final keywords = json['keywords'] as List<dynamic>;
+    final label = keywords.isNotEmpty
+        ? keywords[0]['keyword'] as String
+        : id;
     return AacSymbol(
-      id: json['id'].toString(),
-      label: json['name'] as String,
-      imageUrl: json['image_url'] as String,
-      source: 'opensymbols',
+      id: id,
+      label: label,
+      imageUrl: 'https://static.arasaac.org/pictograms/$id/${id}_500.png',
+      source: 'arasaac',
     );
   }
 
@@ -59,9 +65,16 @@ class SymbolService {
   // Local cache: symbolId -> AacSymbol
   final Map<String, AacSymbol> _cache = {};
   Directory? _cacheDir;
+  // Completer so search() always waits for initialize() to finish,
+  // regardless of whether the provider awaited initialize() or not.
+  final Completer<void> _ready = Completer<void>();
 
-  static const String _openSymbolsBase =
-      'https://opensymbols.org/api/v1/symbols';
+  // ARASAAC public API — free, no auth required, CC BY-NC-SA licensed
+  static const String _arasaacBase =
+      'https://api.arasaac.org/api/pictograms';
+
+  static String _arasaacImageUrl(String id) =>
+      'https://static.arasaac.org/pictograms/$id/${id}_500.png';
 
   SymbolService({Dio? dio}) : _dio = dio ?? Dio();
 
@@ -72,10 +85,12 @@ class SymbolService {
       await _cacheDir!.create(recursive: true);
     }
     await _loadCacheIndex();
+    _ready.complete();
   }
 
-  /// Search OpenSymbols API. Falls back to local cache if offline.
+  /// Search ARASAAC API. Falls back to local cache if offline.
   Future<List<AacSymbol>> search(String query) async {
+    await _ready.future; // Ensure cache index is loaded before searching
     // First check local cache for matches
     final localMatches = _cache.values
         .where((s) =>
@@ -83,9 +98,9 @@ class SymbolService {
         .toList();
 
     try {
+      final encoded = Uri.encodeComponent(query);
       final response = await _dio.get(
-        _openSymbolsBase,
-        queryParameters: {'q': query, 'locale': 'en'},
+        '$_arasaacBase/en/search/$encoded',
         options: Options(
           sendTimeout: const Duration(seconds: 5),
           receiveTimeout: const Duration(seconds: 5),
@@ -95,7 +110,7 @@ class SymbolService {
       if (response.statusCode == 200) {
         final data = response.data as List;
         final remoteSymbols =
-            data.map((j) => AacSymbol.fromOpenSymbolsJson(j)).toList();
+            data.map((j) => AacSymbol.fromArasaacJson(j as Map<String, dynamic>)).toList();
 
         // Cache the results
         for (final sym in remoteSymbols) {
@@ -111,20 +126,19 @@ class SymbolService {
     return localMatches;
   }
 
-  /// Get a symbol by ID, from cache or network.
+  /// Get a symbol by ID, from cache or ARASAAC image URL.
   Future<AacSymbol?> getById(String id) async {
     if (_cache.containsKey(id)) return _cache[id];
 
-    try {
-      final response = await _dio.get('$_openSymbolsBase/$id');
-      if (response.statusCode == 200) {
-        final sym = AacSymbol.fromOpenSymbolsJson(response.data);
-        _cache[id] = sym;
-        return sym;
-      }
-    } catch (_) {}
-
-    return null;
+    // Construct the symbol directly from the known ARASAAC URL pattern
+    final sym = AacSymbol(
+      id: id,
+      label: id,
+      imageUrl: _arasaacImageUrl(id),
+      source: 'arasaac',
+    );
+    _cache[id] = sym;
+    return sym;
   }
 
   /// Download and cache a symbol image locally for offline use.

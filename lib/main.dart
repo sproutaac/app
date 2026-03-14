@@ -5,9 +5,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constants/app_theme.dart';
 import 'models/database.dart';
 import 'onboarding/onboarding_flow.dart';
+import 'onboarding/onboarding_provider.dart';
 import 'screens/home/profile_selection_screen.dart';
 
 // Global database provider — single instance for app lifetime
@@ -19,6 +21,11 @@ final dbProvider = Provider<AppDatabase>((ref) {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Read onboarding flag synchronously at startup so OnboardingGate
+  // renders immediately with no loading spinner.
+  final prefs = await SharedPreferences.getInstance();
+  final onboardingDone = prefs.getBool('onboarding_complete') ?? false;
 
   // Lock to portrait — important for consistent motor planning
   await SystemChrome.setPreferredOrientations([
@@ -34,8 +41,13 @@ void main() async {
   );
 
   runApp(
-    const ProviderScope(
-      child: SproutApp(),
+    ProviderScope(
+      overrides: [
+        // Pre-populate with the value we already have so the gate
+        // never shows a loading frame.
+        onboardingCompleteProvider.overrideWith((_) => onboardingDone),
+      ],
+      child: const SproutApp(),
     ),
   );
 }
@@ -46,7 +58,7 @@ class SproutApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'Sprout AAC',
+      title: 'SproutAAC',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       // High contrast mode respects system accessibility settings
