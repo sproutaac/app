@@ -107,14 +107,14 @@ class _TemplateCard extends StatelessWidget {
           boxShadow: selected
               ? [
                   BoxShadow(
-                    color: const Color(0xFF1A8C45).withOpacity(0.15),
+                    color: const Color(0xFF1A8C45).withValues(alpha: 0.15),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   )
                 ]
               : [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
+                    color: Colors.black.withValues(alpha: 0.04),
                     blurRadius: 4,
                     offset: const Offset(0, 1),
                   )

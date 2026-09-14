@@ -176,13 +176,6 @@ void main() {
         () async {
       final localFile =
           File('${tempDir.path}/existing.png')..writeAsBytesSync([1, 2, 3]);
-      const sym = AacSymbol(
-        id: '10',
-        label: 'x',
-        imageUrl: 'https://example.com/x.png',
-        localPath: '',
-        source: 'arasaac',
-      );
       // localPath is set but empty string — file won't exist, so download path
       // is exercised. Use a real path to test the early-return path.
       final symWithPath = AacSymbol(

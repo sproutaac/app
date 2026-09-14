@@ -23,13 +23,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sprout_aac/onboarding/onboarding.dart';
-import 'package:sprout_aac/onboarding/onboarding_provider.dart';
-import 'package:sprout_aac/onboarding/onboarding_widgets.dart';
-import 'package:sprout_aac/onboarding/steps/step_welcome.dart';
-import 'package:sprout_aac/onboarding/steps/step_profile.dart';
-import 'package:sprout_aac/onboarding/steps/step_template.dart';
-import 'package:sprout_aac/onboarding/steps/step_personalize.dart';
-import 'package:sprout_aac/onboarding/steps/step_done.dart';
 
 import '../helpers/test_helpers.dart';
 

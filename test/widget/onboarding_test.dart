@@ -10,7 +10,7 @@ import 'package:sprout_aac/onboarding/onboarding_provider.dart';
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  Widget _gate({required bool complete}) => ProviderScope(
+  Widget gate({required bool complete}) => ProviderScope(
         overrides: [
           onboardingCompleteProvider.overrideWith((_) => complete),
         ],
@@ -20,7 +20,7 @@ void main() {
       );
 
   testWidgets('shows child when onboarding is complete', (tester) async {
-    await tester.pumpWidget(_gate(complete: true));
+    await tester.pumpWidget(gate(complete: true));
     await tester.pumpAndSettle();
 
     expect(find.text('main screen'), findsOneWidget);
@@ -29,7 +29,7 @@ void main() {
 
   testWidgets('shows OnboardingFlow when onboarding is not complete',
       (tester) async {
-    await tester.pumpWidget(_gate(complete: false));
+    await tester.pumpWidget(gate(complete: false));
     await tester.pumpAndSettle();
 
     expect(find.text('Sprout'), findsOneWidget);

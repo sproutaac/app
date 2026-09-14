@@ -406,7 +406,7 @@ void main() {
           ),
         );
 
-    Future<void> _driftFlush(WidgetTester tester) async {
+    Future<void> driftFlush(WidgetTester tester) async {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(Duration.zero);
     }
@@ -417,7 +417,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('Set Edit Mode PIN'), findsOneWidget);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('SetPinDialog: invalid PIN shows error message', (tester) async {
@@ -440,7 +440,7 @@ void main() {
       await tester.tap(find.text('Set PIN'));
       await tester.pump(const Duration(milliseconds: 200));
       await tester.pump(Duration.zero);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets("SetPinDialog: mismatched PINs shows error message",
@@ -464,7 +464,7 @@ void main() {
       await tester.tap(find.text('Set PIN'));
       await tester.pump(const Duration(milliseconds: 200));
       await tester.pump(Duration.zero);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets(
@@ -487,7 +487,7 @@ void main() {
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsOneWidget,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('SetPinDialog: cancel does not unlock the grid', (tester) async {
@@ -503,7 +503,7 @@ void main() {
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsNothing,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets(
@@ -527,7 +527,7 @@ void main() {
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsOneWidget,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
   });
 
@@ -546,7 +546,7 @@ void main() {
           ),
         );
 
-    Future<void> _driftFlush(WidgetTester tester) async {
+    Future<void> driftFlush(WidgetTester tester) async {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(Duration.zero);
     }
@@ -559,7 +559,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('Edit Mode PIN'), findsOneWidget);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('VerifyPinDialog: incorrect PIN shows error', (tester) async {
@@ -581,7 +581,7 @@ void main() {
       await tester.tap(find.text('Unlock'));
       await tester.pump(const Duration(milliseconds: 200));
       await tester.pump(Duration.zero);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('VerifyPinDialog: correct PIN unlocks editable grid',
@@ -602,7 +602,7 @@ void main() {
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsOneWidget,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('VerifyPinDialog: cancel does not unlock the grid',
@@ -619,7 +619,7 @@ void main() {
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsNothing,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets(
@@ -641,7 +641,7 @@ void main() {
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsOneWidget,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
   });
 
@@ -660,7 +660,7 @@ void main() {
           ),
         );
 
-    Future<void> _unlockViaSetPin(WidgetTester tester) async {
+    Future<void> unlockViaSetPin(WidgetTester tester) async {
       await tester.pumpWidget(wrapEditor());
       await tester.pump(const Duration(milliseconds: 100)); // dialog shown
       final fields = find.byType(TextField);
@@ -674,18 +674,18 @@ void main() {
       await tester.pump(Duration.zero); // Drift initial stream
     }
 
-    Future<void> _driftFlush(WidgetTester tester) async {
+    Future<void> driftFlush(WidgetTester tester) async {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(Duration.zero);
     }
 
     testWidgets('hint banner is visible once grid is unlocked', (tester) async {
-      await _unlockViaSetPin(tester);
+      await unlockViaSetPin(tester);
       expect(
         find.text('Tap a cell to edit · Tap empty slots to add'),
         findsOneWidget,
       );
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('shows add-icon for empty cells and edit-badge for filled cells',
@@ -698,7 +698,7 @@ void main() {
         backgroundColor: const Value('#2196F3'),
       ));
 
-      await _unlockViaSetPin(tester);
+      await unlockViaSetPin(tester);
 
       // Filled cell shows label
       expect(find.text('help'), findsOneWidget);
@@ -707,7 +707,7 @@ void main() {
       // Filled cell shows edit badge
       expect(find.byIcon(Icons.edit), findsOneWidget);
 
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('_EditableCell falls back to blue for invalid color hex',
@@ -720,22 +720,22 @@ void main() {
         backgroundColor: const Value('not-a-color'),
       ));
 
-      await _unlockViaSetPin(tester);
+      await unlockViaSetPin(tester);
 
       expect(find.text('ok'), findsOneWidget);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('tapping an empty slot opens CellEditorSheet for a new cell',
         (tester) async {
-      await _unlockViaSetPin(tester);
+      await unlockViaSetPin(tester);
 
       // All 9 slots are empty — tap any add-icon slot (fires _openEditor, line 270)
       await tester.tap(find.byIcon(Icons.add_rounded).first);
       await tester.pump(const Duration(milliseconds: 200)); // bottom-sheet animation
 
       expect(find.text('New Cell'), findsOneWidget);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('tapping a filled cell opens CellEditorSheet for editing',
@@ -747,14 +747,14 @@ void main() {
         label: 'water',
       ));
 
-      await _unlockViaSetPin(tester);
+      await unlockViaSetPin(tester);
 
       // Tap the filled cell label — fires _openEditor (lines 229-242, 248)
       await tester.tap(find.text('water'));
       await tester.pump(const Duration(milliseconds: 200)); // bottom-sheet animation
 
       expect(find.text('Edit Cell'), findsOneWidget);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
 
     testWidgets('_EditableCell with symbolUrl renders an Image widget',
@@ -767,11 +767,11 @@ void main() {
         symbolUrl: const Value('https://example.com/dog.png'),
       ));
 
-      await _unlockViaSetPin(tester);
+      await unlockViaSetPin(tester);
 
       // Image.network is built (loading fails in tests, but the widget is present — lines 299-304)
       expect(find.byType(Image), findsOneWidget);
-      await _driftFlush(tester);
+      await driftFlush(tester);
     });
   });
 }

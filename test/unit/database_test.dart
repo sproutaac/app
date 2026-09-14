@@ -60,7 +60,7 @@ void main() {
     });
 
     test('updateProfile persists changes', () async {
-      final id = await insertProfile(name: 'Alex');
+      await insertProfile(name: 'Alex');
       final profiles = await db.getAllProfiles();
       final updated = profiles.first.copyWith(name: 'Alexia');
       final success = await db.updateProfile(updated);

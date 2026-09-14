@@ -183,7 +183,7 @@ class _StepDoneState extends ConsumerState<StepDone>
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -199,7 +199,7 @@ class _StepDoneState extends ConsumerState<StepDone>
                 child: Column(
                   children: [
                     Text(
-                      "${childName}'s board is ready.",
+                      "$childName's board is ready.",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 28,
@@ -213,7 +213,7 @@ class _StepDoneState extends ConsumerState<StepDone>
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white.withOpacity(0.75),
+                        color: Colors.white.withValues(alpha: 0.75),
                         height: 1.5,
                       ),
                     ),

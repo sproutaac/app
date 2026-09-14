@@ -55,7 +55,7 @@ class _StepProfileState extends ConsumerState<StepProfile> {
           const SizedBox(height: 32),
 
           // ── Name ──────────────────────────────────────────────────────────
-          OnboardingLabel("What's their name?"),
+          const OnboardingLabel("What's their name?"),
           const SizedBox(height: 8),
           TextField(
             controller: _nameController,
