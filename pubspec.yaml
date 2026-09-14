@@ -30,7 +30,7 @@ dependencies:
   dio: ^5.4.0
 
   # Image handling (custom symbols from camera/gallery)
-  image_picker: ^1.0.7
+  image_picker: ^1.2.3
   cached_network_image: ^3.3.1
 
   # Open Board Format import/export
