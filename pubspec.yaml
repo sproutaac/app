@@ -17,7 +17,7 @@ dependencies:
   path: ^1.8.3
 
   # Text-to-speech - native, offline, no API needed
-  flutter_tts: ^3.8.5
+  flutter_tts: ^4.2.5
 
   # State management
   flutter_riverpod: ^2.4.9
@@ -35,9 +35,6 @@ dependencies:
 
   # Open Board Format import/export
   archive: ^3.4.9
-
-  # Connectivity detection
-  connectivity_plus: ^5.0.2
 
   # Secure storage for caregiver PIN
   flutter_secure_storage: ^9.0.0
