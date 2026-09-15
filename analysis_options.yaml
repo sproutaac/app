@@ -12,6 +12,7 @@ analyzer:
     - build/**
     - ios/**
     - macos/**
+    - android/**
 include: package:flutter_lints/flutter.yaml
 
 linter:
