@@ -2,13 +2,13 @@
   <img src="https://raw.githubusercontent.com/sproutaac/.github/main/brand/sprout-mark.png" width="88" alt="Sprout AAC logo">
 </p>
 
-# SproutAAC
+# Sprout AAC
 
 **A free, open-source Augmentative and Alternative Communication (AAC) app for children with autism, cerebral palsy, and developmental delays.**
 
 Sprout exists because no child should be without a voice due to cost. Every feature is free. Always.
 
-> **Status: pre-release — not yet on the App Store or Google Play.** We're building in public and the code runs, but the app isn't downloadable yet. [Join the waitlist](https://sproutaac.org) to be notified on launch.
+> **Status: pre-release — not yet on the App Store or Google Play.** We're building in public. An unsigned [v0.1.0 macOS build](https://github.com/sproutaac/app/releases/tag/v0.1.0) is available for developers and SLPs comfortable testing unfinished software; iOS can be built from source. [Join the waitlist](https://sproutaac.org) to hear when the app-store release is ready.
 
 ---
 
@@ -193,6 +193,12 @@ genhtml coverage/lcov.info -o coverage/html && open coverage/html/index.html
 - Widgets with `AnimationController` use `pump(Duration)` instead of `pumpAndSettle()` to avoid timeouts.
 - `StepProfile` uses `tester.binding.setSurfaceSize(const Size(800, 1100))` to prevent layout overflow in the default test viewport.
 - The EditorScreen PIN dialogs are tested via `TestDefaultBinaryMessengerBinding.setMockMethodCallHandler` on the `flutter_secure_storage` platform channel — no dependency injection required.
+
+---
+
+## Brand & app icon
+
+The three-leaf sprout is the official Sprout AAC logo and app icon. The iOS, Android, and macOS launcher icons are generated from the master files in [`sproutaac/.github/brand`](https://github.com/sproutaac/.github/tree/main/brand) (`app-icon/`). Regenerate them from there rather than editing the PNGs in `ios/`, `android/`, or `macos/` by hand. The public brand guide is at [sproutaac.org/brand](https://sproutaac.org/brand).
 
 ---
 
