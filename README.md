@@ -1,4 +1,8 @@
-# 🌱 SproutAAC
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sproutaac/.github/main/brand/sprout-mark.png" width="88" alt="Sprout AAC logo">
+</p>
+
+# SproutAAC
 
 **A free, open-source Augmentative and Alternative Communication (AAC) app for children with autism, cerebral palsy, and developmental delays.**
 
