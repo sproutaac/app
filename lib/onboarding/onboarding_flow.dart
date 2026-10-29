@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'onboarding_provider.dart';
@@ -84,7 +85,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5FAF6),
+      backgroundColor: AppColors.cream,
       body: Stack(
         children: [
           PageView(

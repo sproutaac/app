@@ -58,7 +58,7 @@ class SproutApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'SproutAAC',
+      title: 'Sprout AAC',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       // High contrast mode respects system accessibility settings

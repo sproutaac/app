@@ -16,6 +16,7 @@
 // ============================================================
 
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../services/symbol_service.dart';
@@ -190,7 +191,7 @@ class _SymbolResultTile extends StatelessWidget {
     return Container(
       width: 90,
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFFE8F5E9) : Colors.white,
+        color: selected ? AppColors.selectedTint : Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: selected ? const Color(0xFF1A8C45) : Colors.grey.shade200,

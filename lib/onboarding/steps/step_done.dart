@@ -186,8 +186,8 @@ class _StepDoneState extends ConsumerState<StepDone>
                     color: Colors.white.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
-                  child: const Center(
-                    child: Text('🌱', style: TextStyle(fontSize: 56)),
+                  child: Center(
+                    child: Image.asset('assets/images/sprout-mark.png', height: 64, semanticLabel: 'Sprout AAC logo'),
                   ),
                 ),
               ),

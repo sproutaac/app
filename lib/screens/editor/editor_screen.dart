@@ -222,7 +222,7 @@ class _EditableCell extends StatelessWidget {
     try {
       return Color(int.parse(hex.replaceFirst('#', '0xFF')));
     } catch (_) {
-      return Colors.blue;
+      return AppColors.green;
     }
   }
 

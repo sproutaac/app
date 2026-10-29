@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../onboarding_provider.dart';
@@ -147,7 +148,7 @@ class _TemplateCard extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFE8F5E9),
+                                  color: AppColors.selectedTint,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: const Text(

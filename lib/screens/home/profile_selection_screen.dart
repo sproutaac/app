@@ -27,20 +27,29 @@ class ProfileSelectionScreen extends ConsumerWidget {
         child: Column(
           children: [
             // App header
-            const Padding(
-              padding: EdgeInsets.fromLTRB(24, 32, 24, 8),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
               child: Column(
                 children: [
-                  Text(
-                    '🌱 Sprout',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.primary,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset('assets/images/sprout-mark.png',
+                          height: 36, semanticLabel: 'Sprout AAC logo'),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Sprout',
+                        style: TextStyle(
+                          fontFamily: AppFonts.heading,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 4),
-                  Text(
+                  const SizedBox(height: 4),
+                  const Text(
                     'Who is communicating today?',
                     style: TextStyle(
                       fontSize: 18,

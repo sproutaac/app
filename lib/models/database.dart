@@ -1,5 +1,5 @@
 // ============================================================
-// database.dart — Drift (SQLite) schema for OpenVoice AAC
+// database.dart — Drift (SQLite) schema for Sprout AAC
 // All user data lives here first. Cloud sync is additive only.
 // ============================================================
 

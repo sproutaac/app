@@ -68,4 +68,22 @@ flutter:
     - assets/templates/little_communicator.json
     - assets/templates/growing_voice.json
     - assets/templates/big_talker.json
-  # fonts:  # OpenDyslexic — add assets/fonts/OpenDyslexic-Regular.otf + Bold.otf to enable
+  # Brand fonts (sproutaac.org/brand), SIL Open Font License: assets/fonts/OFL-*.txt
+  fonts:
+    - family: Lora
+      fonts:
+        - asset: assets/fonts/Lora-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Lora-Bold.ttf
+          weight: 700
+    - family: DMSans
+      fonts:
+        - asset: assets/fonts/DMSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/DMSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/DMSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/DMSans-Bold.ttf
+          weight: 700
+  # OpenDyslexic — add assets/fonts/OpenDyslexic-Regular.otf + Bold.otf to enable

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/app_theme.dart';
 
 // ─── Step Shell ───────────────────────────────────────────────────────────────
 // Wraps every step with safe area, back button, and consistent padding.
@@ -74,7 +75,8 @@ class OnboardingHeading extends StatelessWidget {
           style: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F2318),
+            color: AppColors.forest,
+            fontFamily: AppFonts.heading,
             height: 1.2,
           ),
         ),
@@ -137,7 +139,7 @@ class ChoiceChipOption extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFFE8F5E9) : Colors.white,
+          color: selected ? AppColors.selectedTint : Colors.white,
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
             color: selected ? const Color(0xFF1A8C45) : Colors.grey.shade300,

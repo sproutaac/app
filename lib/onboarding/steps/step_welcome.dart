@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 
 class StepWelcome extends StatelessWidget {
   final VoidCallback onNext;
@@ -30,8 +31,8 @@ class StepWelcome extends StatelessWidget {
                   color: Colors.white.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Center(
-                  child: Text('🌱', style: TextStyle(fontSize: 52)),
+                child: Center(
+                  child: Image.asset('assets/images/sprout-mark.png', height: 60, semanticLabel: 'Sprout AAC logo'),
                 ),
               ),
               const SizedBox(height: 24),
@@ -39,8 +40,9 @@ class StepWelcome extends StatelessWidget {
               const Text(
                 'Sprout',
                 style: TextStyle(
+                  fontFamily: AppFonts.heading,
                   fontSize: 42,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: Colors.white,
                   letterSpacing: -0.5,
                 ),

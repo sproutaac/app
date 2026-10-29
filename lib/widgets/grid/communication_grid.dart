@@ -13,6 +13,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/database.dart';
 import '../../services/tts_service.dart';
@@ -207,7 +208,7 @@ class _CommunicationCellState extends State<_CommunicationCell>
     try {
       return Color(int.parse(hex.replaceFirst('#', '0xFF')));
     } catch (_) {
-      return Colors.blue;
+      return AppColors.green;
     }
   }
 

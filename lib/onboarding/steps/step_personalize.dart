@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../widgets/symbol/symbol_picker.dart';
@@ -54,7 +55,7 @@ class _StepPersonalizeState extends ConsumerState<StepPersonalize> {
                   label: Text(_symbolLabels[id] ?? id),
                   deleteIcon: const Icon(Icons.close, size: 16),
                   onDeleted: () => notifier.removeFavoriteSymbol(id),
-                  backgroundColor: const Color(0xFFE8F5E9),
+                  backgroundColor: AppColors.selectedTint,
                   side: BorderSide.none,
                 );
               }).toList(),
@@ -75,7 +76,7 @@ class _StepPersonalizeState extends ConsumerState<StepPersonalize> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFE8F5E9),
+                color: AppColors.selectedTint,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
