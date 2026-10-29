@@ -35,3 +35,7 @@ assets/symbols/*
 assets/fonts/*
 !assets/symbols/.gitkeep
 !assets/fonts/.gitkeep
+# Brand fonts are tracked: pubspec.yaml needs them to build
+!assets/fonts/Lora-*.ttf
+!assets/fonts/DMSans-*.ttf
+!assets/fonts/OFL-*.txt
