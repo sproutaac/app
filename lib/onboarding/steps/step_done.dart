@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
+import '../../constants/app_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -241,6 +242,7 @@ class _StepDoneState extends ConsumerState<StepDone>
                         borderRadius: BorderRadius.circular(16),
                       ),
                       textStyle: const TextStyle(
+                        fontFamily: AppFonts.body,
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
                       ),

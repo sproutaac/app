@@ -206,6 +206,7 @@ class OnboardingContinueButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
           ),
           textStyle: const TextStyle(
+            fontFamily: AppFonts.body,
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),

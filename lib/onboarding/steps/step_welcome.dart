@@ -95,6 +95,7 @@ class StepWelcome extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     textStyle: const TextStyle(
+                      fontFamily: AppFonts.body,
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
                     ),

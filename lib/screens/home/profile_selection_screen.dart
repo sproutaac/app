@@ -299,6 +299,7 @@ class _EmptyState extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 32, vertical: 16),
                 textStyle: const TextStyle(
+                  fontFamily: AppFonts.body,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),

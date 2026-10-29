@@ -347,6 +347,7 @@ class _CellEditorSheetState extends State<CellEditorSheet> {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   textStyle: const TextStyle(
+                    fontFamily: AppFonts.body,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
