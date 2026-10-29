@@ -144,7 +144,7 @@ class FitzgeraldColors {
   static const descriptors = Color(0xFF2563EB); // blue — describing words
   static const nouns = Color(0xFFDC2626);    // red/orange — nouns/things
   static const social = Color(0xFFFDA4AF);   // pink — social words
-  static const misc = Color(0xFFE5E7EB);     // grey — misc/function words
+  static const misc = Color(0xFFE5E7EB);     // gray — misc/function words
 
   static const presets = [
     FitzgeraldColors.people,

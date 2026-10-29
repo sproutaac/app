@@ -361,9 +361,9 @@ void main() {
       await tester.pumpWidget(wrapSheet());
       await tester.pump();
 
-      // Scroll to the Colour section
+      // Scroll to the Color section
       await tester.dragUntilVisible(
-        find.text('Colour'),
+        find.text('Color'),
         find.byType(SingleChildScrollView),
         const Offset(0, -100),
       );

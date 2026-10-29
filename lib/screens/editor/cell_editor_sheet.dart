@@ -2,7 +2,7 @@
 // cell_editor_sheet.dart — Modal bottom sheet for editing a cell
 //
 // Handles both new cells (cell == null) and existing cells.
-// Fields: label, symbol picker, background colour, action type,
+// Fields: label, symbol picker, background color, action type,
 //         optional speak-text override.
 // ============================================================
 
@@ -253,8 +253,8 @@ class _CellEditorSheetState extends State<CellEditorSheet> {
             ),
             const SizedBox(height: 20),
 
-            // ── Background colour ─────────────────────────────────────────────
-            const _SectionLabel('Colour'),
+            // ── Background color ─────────────────────────────────────────────
+            const _SectionLabel('Color'),
             const SizedBox(height: 10),
             Wrap(
               spacing: 10,

@@ -252,7 +252,7 @@ void main() {
     });
 
     testWidgets('_parseColor falls back to blue on invalid hex', (tester) async {
-      // Insert a cell with a garbage colour value
+      // Insert a cell with a garbage color value
       await db.upsertCell(BoardCellsCompanion(
         boardId: Value(board.id),
         rowIndex: const Value(0),
