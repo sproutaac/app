@@ -17,7 +17,7 @@
 
 Sprout exists because no child should be without a voice due to cost. Every feature is free. Always.
 
-> **Status: pre-release — not yet on the App Store or Google Play.** We're building in public. An unsigned [v0.1.0 macOS build](https://github.com/sproutaac/app/releases/tag/v0.1.0) is available for developers and SLPs comfortable testing unfinished software; iOS can be built from source. [Join the waitlist](https://sproutaac.org) to hear when the app-store release is ready.
+> **Status: pre-release — not yet on the App Store or Google Play.** We're building in public. An unsigned [v0.1.0 macOS build](https://github.com/sproutaac/app/releases/tag/v0.1.0) is available for developers and SLPs comfortable testing unfinished software; iOS can be built from source. iPad, iPhone and Android test builds come in v0.2, and the App Store and Google Play launch is v1.0 (see the [roadmap](#roadmap)). [Join the waitlist](https://sproutaac.org) to hear when the app-store release is ready.
 
 ---
 
@@ -41,30 +41,28 @@ Sprout is permanently free, open-source, and built with the AAC community — no
 
 ## Features
 
-### v0.1 — MVP (current)
+### v0.1 — MVP (released, macOS)
 - [x] Guided 5-step onboarding flow
 - [x] Three starter boards: Little Communicator (3×3), Growing Voice (4×4), Big Talker (5×5)
 - [x] Open Board Format (OBF) templates with Fitzgerald Key color coding
-- [x] ARASAAC symbol search — 30,000+ free pictograms, no account needed
+- [x] ARASAAC symbol search: 30,000+ free pictograms, no account needed. *Broken in the v0.1.0 macOS build; fixed in v0.1.1 ([#10](https://github.com/sproutaac/app/issues/10)).*
 - [x] Communication screen with sentence bar and native offline TTS
 - [x] On-device word prediction (bigram model, trains silently from every tap)
 - [x] Multi-child profiles
 - [x] Caregiver edit mode — PIN-gated board editor (add, edit, delete cells)
 
-### v0.2 — Sharing
-- [ ] OBF import/export
-- [ ] Board sharing via share code
-- [ ] SLP → family board push
+## Roadmap
 
-### v0.3 — Access
-- [ ] Switch scanning (single & dual switch) — scaffolded in v0.1
-- [ ] Eye gaze support
-- [ ] Larger grid sizes (42, 84 cells)
+Each version is a [milestone](https://github.com/sproutaac/app/milestones) with its issues. The same plan is on [sproutaac.org](https://sproutaac.org/#roadmap).
 
-### v0.4 — Community
-- [ ] Optional cloud backup (Supabase)
-- [ ] Therapist dashboard
-- [ ] Community board library
+| Version | Focus | What's in it |
+|---|---|---|
+| [v0.1.1](https://github.com/sproutaac/app/milestone/1) | Fixes | Symbol search, Growing Voice colors, the macOS app name, real screenshots for the site |
+| [v0.2.0](https://github.com/sproutaac/app/milestone/2) | Tablets, phones and beta | iPad and iPhone (TestFlight), Android (Play testing), a tablet layout pass, a beta with families and SLPs, **local backup and restore**, the word prediction strip |
+| [v0.3.0](https://github.com/sproutaac/app/milestone/3) | Sharing | OBF import/export, board sharing by share code, SLP → family board push |
+| [v0.4.0](https://github.com/sproutaac/app/milestone/4) | Access | Switch scanning (single and dual), 42- and 84-cell grids, **Spanish** (interface, boards, voices, symbol search) |
+| [v1.0.0](https://github.com/sproutaac/app/milestone/5) | App Store and Google Play | Accessibility and security/privacy audits, SLP-reviewed starter boards, store listings, launch |
+| After v1.0 | Community | Eye gaze, optional end-to-end encrypted cloud backup, therapist dashboard, community board library |
 
 ---
 
