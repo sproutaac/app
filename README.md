@@ -8,8 +8,8 @@
 
 <p>
   <!-- Badges are committed SVGs so they load even when shields.io doesn't. release.svg is regenerated on each version bump; test/release_badge_test.dart checks it -->
-  <img src="docs/badges/app-store-coming-soon.svg" alt="App Store: coming soon"/>
-  <img src="docs/badges/google-play-coming-soon.svg" alt="Google Play: coming soon"/>
+  <img src="docs/badges/app-store-v1.svg" alt="App Store: planned for v1.0"/>
+  <img src="docs/badges/google-play-v1.svg" alt="Google Play: planned for v1.0"/>
   <a href="https://github.com/sproutaac/app/releases/latest"><img src="docs/badges/release.svg" alt="Latest release"/></a>
   <a href="LICENSE"><img src="docs/badges/license-gpl-3.0.svg" alt="License: GPL v3"/></a>
   <a href="https://github.com/sproutaac/app/actions/workflows/ci.yml"><img src="https://github.com/sproutaac/app/actions/workflows/ci.yml/badge.svg" alt="CI status"/></a>
@@ -75,7 +75,7 @@ Each version is a [milestone](https://github.com/sproutaac/app/milestones) with 
 | State | Riverpod | Predictable, testable, no BuildContext leaks |
 | TTS | flutter_tts (native) | Free, offline, no API key |
 | Symbols | ARASAAC API | Free, no auth, CC BY-NC-SA, 30k+ pictograms |
-| Cloud sync | Supabase (optional) | Generous free tier, additive only |
+| Cloud sync | Supabase (optional, planned for after v1.0) | Opt-in and end-to-end encrypted; Sprout works fully without it |
 
 ---
 
@@ -153,7 +153,7 @@ assets/
 
 ## Testing
 
-**192 tests · all passing · 91% line coverage**
+**193 tests · all passing · 91% line coverage** (excluding generated code)
 
 Run the full suite:
 
