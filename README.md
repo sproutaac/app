@@ -6,6 +6,15 @@
 
 **A free, open-source Augmentative and Alternative Communication (AAC) app for children with autism, cerebral palsy, and developmental delays.**
 
+<p>
+  <!-- Badges are committed SVGs so they load even when shields.io doesn't. release.svg is regenerated on each version bump; test/release_badge_test.dart checks it -->
+  <img src="docs/badges/app-store-coming-soon.svg" alt="App Store: coming soon"/>
+  <img src="docs/badges/google-play-coming-soon.svg" alt="Google Play: coming soon"/>
+  <a href="https://github.com/sproutaac/app/releases/latest"><img src="docs/badges/release.svg" alt="Latest release"/></a>
+  <a href="LICENSE"><img src="docs/badges/license-gpl-3.0.svg" alt="License: GPL v3"/></a>
+  <a href="https://github.com/sproutaac/app/actions/workflows/ci.yml"><img src="https://github.com/sproutaac/app/actions/workflows/ci.yml/badge.svg" alt="CI status"/></a>
+</p>
+
 Sprout exists because no child should be without a voice due to cost. Every feature is free. Always.
 
 > **Status: pre-release — not yet on the App Store or Google Play.** We're building in public. An unsigned [v0.1.0 macOS build](https://github.com/sproutaac/app/releases/tag/v0.1.0) is available for developers and SLPs comfortable testing unfinished software; iOS can be built from source. [Join the waitlist](https://sproutaac.org) to hear when the app-store release is ready.

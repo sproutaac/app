@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  # Changes are pushed straight to main, so check those as well as PRs
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
