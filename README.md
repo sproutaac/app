@@ -153,7 +153,7 @@ assets/
 
 ## Testing
 
-**193 tests · all passing · 91% line coverage** (excluding generated code)
+**195 tests · all passing · 89% line coverage** (excluding generated code)
 
 Run the full suite:
 
