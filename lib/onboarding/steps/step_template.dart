@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../constants/app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -191,6 +194,7 @@ class _TemplateCard extends StatelessWidget {
               // Mini grid preview
               _MiniGridPreview(
                 words: template.previewWords,
+                assetPath: template.assetPath,
                 columns: template.ageRange == AgeRange.toddler
                     ? 3
                     : template.ageRange == AgeRange.child
@@ -207,44 +211,66 @@ class _TemplateCard extends StatelessWidget {
 
 // ─── Mini Grid Preview ────────────────────────────────────────────────────────
 
-class _MiniGridPreview extends StatelessWidget {
+class _MiniGridPreview extends StatefulWidget {
   final List<String> words;
+  final String assetPath;
   final int columns;
 
-  const _MiniGridPreview({required this.words, required this.columns});
+  const _MiniGridPreview({
+    required this.words,
+    required this.assetPath,
+    required this.columns,
+  });
 
-  Color _cellColor(int index) {
-    // Approximate Fitzgerald Key coloring based on position in our templates
-    final colorsByPosition = [
-      // Row 0: pronouns/social → yellow, or verbs → green
-      [Colors.amber.shade200, Colors.amber.shade200, Colors.amber.shade200, Colors.amber.shade200, Colors.orange.shade200],
-      // Row 1: verbs → green, negation → red
-      [Colors.green.shade200, Colors.green.shade200, Colors.green.shade200, Colors.green.shade200, Colors.red.shade200],
-      // Row 2: verbs/descriptors → green, negation → red
-      [Colors.green.shade200, Colors.red.shade200, Colors.green.shade200, Colors.green.shade200, Colors.green.shade200],
-      // Row 3: descriptors → purple
-      [Colors.purple.shade100, Colors.purple.shade100, Colors.purple.shade100, Colors.purple.shade100, Colors.red.shade200],
-      // Row 4: nouns/actions → orange, yes/no → blue/red
-      [Colors.orange.shade200, Colors.orange.shade200, Colors.green.shade200, Colors.blue.shade200, Colors.red.shade200],
-    ];
+  @override
+  State<_MiniGridPreview> createState() => _MiniGridPreviewState();
+}
 
-    final row = index ~/ columns;
-    final col = index % columns;
-    if (row < colorsByPosition.length && col < colorsByPosition[row].length) {
-      return colorsByPosition[row][col];
+class _MiniGridPreviewState extends State<_MiniGridPreview> {
+  // label -> cell color, read from the template's OBF asset so the preview
+  // always matches the board the template actually creates.
+  late Future<Map<String, Color>> _colors = _loadColors(widget.assetPath);
+
+  @override
+  void didUpdateWidget(_MiniGridPreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.assetPath != widget.assetPath) {
+      _colors = _loadColors(widget.assetPath);
     }
-    return Colors.grey.shade200;
+  }
+
+  static Future<Map<String, Color>> _loadColors(String assetPath) async {
+    final json = jsonDecode(await rootBundle.loadString(assetPath))
+        as Map<String, dynamic>;
+    final colors = <String, Color>{};
+    for (final btn in json['buttons'] as List<dynamic>) {
+      final match = RegExp(r'rgb\((\d+),\s*(\d+),\s*(\d+)\)')
+          .firstMatch(btn['background_color'] as String? ?? '');
+      if (match == null) continue;
+      final color = Color.fromARGB(255, int.parse(match.group(1)!),
+          int.parse(match.group(2)!), int.parse(match.group(3)!));
+      // Lightened so the small dark labels stay readable
+      colors[btn['label'] as String] = Color.lerp(color, Colors.white, 0.6)!;
+    }
+    return colors;
   }
 
   @override
   Widget build(BuildContext context) {
-    final rows = (words.length / columns).ceil();
+    return FutureBuilder<Map<String, Color>>(
+      future: _colors,
+      builder: (context, snapshot) => _grid(snapshot.data ?? const {}),
+    );
+  }
+
+  Widget _grid(Map<String, Color> colors) {
+    final rows = (widget.words.length / widget.columns).ceil();
     return Column(
       children: List.generate(rows, (row) {
         return Row(
-          children: List.generate(columns, (col) {
-            final index = row * columns + col;
-            if (index >= words.length) {
+          children: List.generate(widget.columns, (col) {
+            final index = row * widget.columns + col;
+            if (index >= widget.words.length) {
               return const Expanded(child: SizedBox());
             }
             return Expanded(
@@ -252,12 +278,12 @@ class _MiniGridPreview extends StatelessWidget {
                 margin: const EdgeInsets.all(1.5),
                 height: 28,
                 decoration: BoxDecoration(
-                  color: _cellColor(index),
+                  color: colors[widget.words[index]] ?? Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Center(
                   child: Text(
-                    words[index],
+                    widget.words[index],
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

@@ -18,6 +18,7 @@
 //   • SharedPreferences must be mocked (setUp) so complete() doesn't crash.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -258,6 +259,33 @@ void main() {
       // Big Talker may be off-screen — scroll the ListView to reveal it.
       await tester.scrollUntilVisible(find.text('Big Talker'), 200);
       expect(find.text('Big Talker'), findsOneWidget);
+    });
+
+    testWidgets("Growing Voice preview colors \"don't\" red and \"have\" green",
+        (tester) async {
+      // rootBundle caches loads; one started in an earlier test's fake-async
+      // zone would never complete here.
+      rootBundle.clear();
+      await tester.pumpWidget(_app(
+        StepTemplate(onNext: () {}, onBack: () {}),
+      ));
+      // Let the preview load each template's colors from its asset
+      await tester.runAsync(() => Future<void>.delayed(
+          const Duration(milliseconds: 100)));
+      await tester.pump();
+
+      Color cellColor(String label) {
+        // The Growing Voice card comes first among cards that have both words
+        final box = tester.widget<Container>(find
+            .ancestor(of: find.text(label), matching: find.byType(Container))
+            .first);
+        return (box.decoration! as BoxDecoration).color!;
+      }
+
+      final dont = cellColor("don't");
+      final have = cellColor('have');
+      expect(dont.r, greaterThan(dont.g), reason: "don't should be red");
+      expect(have.g, greaterThan(have.r), reason: 'have should be green');
     });
 
     testWidgets('continue button is disabled when no template selected',
