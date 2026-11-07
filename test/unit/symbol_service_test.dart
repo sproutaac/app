@@ -111,13 +111,26 @@ void main() {
       expect(results.first.label, 'dog');
     });
 
-    test('returns empty on network error with empty cache', () async {
+    test('throws SymbolSearchUnavailable on network error with empty cache',
+        () async {
       when(() => mockDio.get(any(), options: any(named: 'options')))
           .thenThrow(DioException(
               type: DioExceptionType.connectionError,
               requestOptions: RequestOptions(path: '')));
 
-      final results = await service.search('unknown');
+      expect(() => service.search('unknown'),
+          throwsA(isA<SymbolSearchUnavailable>()));
+    });
+
+    test('returns empty when ARASAAC answers 404 (no matches)', () async {
+      final options = RequestOptions(path: '');
+      when(() => mockDio.get(any(), options: any(named: 'options')))
+          .thenThrow(DioException(
+              type: DioExceptionType.badResponse,
+              requestOptions: options,
+              response: Response(statusCode: 404, requestOptions: options)));
+
+      final results = await service.search('zzzz');
       expect(results, isEmpty);
     });
 

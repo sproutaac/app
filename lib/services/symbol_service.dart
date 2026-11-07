@@ -60,6 +60,16 @@ class AacSymbol {
       );
 }
 
+/// Thrown by [SymbolService.search] when ARASAAC can't be reached and
+/// nothing in the local cache matches, so the UI can say so instead of
+/// showing "No symbols found".
+class SymbolSearchUnavailable implements Exception {
+  const SymbolSearchUnavailable();
+
+  @override
+  String toString() => 'SymbolSearchUnavailable';
+}
+
 class SymbolService {
   final Dio _dio;
   // Local cache: symbolId -> AacSymbol
@@ -119,8 +129,12 @@ class SymbolService {
         await _saveCacheIndex();
         return remoteSymbols;
       }
+    } on DioException catch (e) {
+      // ARASAAC answers 404 when nothing matches — a real "no results"
+      if (e.response?.statusCode == 404) return localMatches;
+      if (localMatches.isEmpty) throw const SymbolSearchUnavailable();
     } catch (_) {
-      // Network unavailable — return local matches only
+      if (localMatches.isEmpty) throw const SymbolSearchUnavailable();
     }
 
     return localMatches;
